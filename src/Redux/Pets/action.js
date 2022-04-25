@@ -17,7 +17,7 @@ export const petsErrorFun = () => ({
 
 export const getPetsData = () => (dispatch) => {
   dispatch(petsLoadingFun());
-  fetch(`http://localhost:3000/pets_data`)
+  fetch(`https://pet-boarding-server.herokuapp.com/`)
     .then((res) => res.json())
     .then((res) => {
       dispatch(petsSuccessFun(res));

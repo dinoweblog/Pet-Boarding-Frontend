@@ -9,10 +9,16 @@ import { Footer } from "./Footer";
 const Container = styled.div`
   min-height: 900px;
   width: 100%;
+  .top-text {
+    width: 50%;
+    margin: auto;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #00092c;
+  }
 `;
 
 const Div = styled.div`
-  border: 1px solid green;
   background-color: white;
   width: 80%;
   margin: auto;
@@ -23,11 +29,22 @@ const Div = styled.div`
   justify-content: center;
 
   table {
-    border: 1px solid gray;
+    border-collapse: collapse;
     text-align: left;
+
+    thead {
+      border-bottom: 1px solid #dddddd;
+      border-top: 1px solid #dddddd;
+      tr {
+        color: #01d6af;
+      }
+    }
     th,
     td {
       padding: 20px;
+    }
+    tr {
+      border-bottom: 1px solid #dddddd;
     }
   }
 
@@ -35,19 +52,31 @@ const Div = styled.div`
     display: flex;
     gap: 10%;
     margin-bottom: 20px;
+    color: #01d6af;
+    font-weight: 600;
   }
   .filter,
-  .sort {
+  .sort,
+  .search-box {
     display: flex;
     flex-direction: column;
     button {
-      margin-left: 20px;
+      margin-right: 20px;
       background-color: transparent;
       border: 1px solid green;
       border-radius: 4px;
-      padding: 3px;
+      padding: 3px 15px;
       cursor: pointer;
       color: black;
+    }
+  }
+
+  .search-box {
+    input {
+      padding-left: 5px;
+      height: 25px;
+      border: 1px solid gray;
+      outline: none;
     }
   }
   .sort {
@@ -56,11 +85,6 @@ const Div = styled.div`
       margin-right: 20px;
     }
   }
-`;
-
-const Row = styled.tr`
-  border: 1px solid gray;
-  padding: 20px;
 `;
 
 export const Home = () => {
@@ -80,7 +104,7 @@ export const Home = () => {
     setPetData([...pets]);
   }, [pets, dispatch]);
 
-  const filterItems = () => {
+  const searchCity = () => {
     const t = pets.filter(
       (el) => el.city.toLowerCase().indexOf(city.toLowerCase()) !== -1
     );
@@ -91,6 +115,14 @@ export const Home = () => {
   const filterItemsV = () => {
     const t = pets.filter(
       (el) => el.verified.toLowerCase() === verify.toLowerCase()
+    );
+    verify === "yes" ? setVerify("no") : setVerify("yes");
+    setPetData([...t]);
+  };
+
+  const filterCity = () => {
+    const t = pets.filter(
+      (el) => el.city.toLowerCase() === verify.toLowerCase()
     );
     verify === "yes" ? setVerify("no") : setVerify("yes");
     setPetData([...t]);
@@ -129,28 +161,35 @@ export const Home = () => {
     <Container>
       <Navbar />
       <Div>
+        <h2 className="top-text">
+          Some Pet Boarding Locaton, Plans and All Details.
+        </h2>
         <div className="filter_sort">
+          <div className="search-box">
+            <p>Search By City</p>
+            <input
+              type="text"
+              name=""
+              id=""
+              placeholder="city..."
+              onChange={(e) => {
+                setCity(e.target.value);
+                searchCity();
+              }}
+            />
+          </div>
           <div className="filter">
             <p>Filter by City And Verified</p>
             <div>
-              <input
-                type="text"
-                name=""
-                id=""
-                placeholder="City..."
-                onChange={(e) => {
-                  setCity(e.target.value);
-                  filterItems();
-                }}
-              />
-              <button onClick={filterItemsV}>Filter by Verified</button>
+              <button onClick={filterItemsV}>Verified</button>
+              <button onClick={filterCity}>Verified</button>
             </div>
           </div>
           <div className="sort">
             <p>Sort By</p>
             <div>
-              <button onClick={SortByCost}>Sort by Cost</button>
-              <button onClick={SortByRating}>Sort by Rating</button>
+              <button onClick={SortByCost}>Cost</button>
+              <button onClick={SortByRating}>Rating</button>
             </div>
           </div>
           {/* <div>
@@ -178,8 +217,8 @@ export const Home = () => {
         </div>
         <table>
           <thead>
-            <Row className="row">
-              <th>Id</th>
+            <tr>
+              <th>S.N.</th>
               <th>Name</th>
               <th>City</th>
               <th>Address</th>
@@ -187,13 +226,14 @@ export const Home = () => {
               <th>Cost Per Day</th>
               <th>Verified</th>
               <th>Rating</th>
-            </Row>
+            </tr>
           </thead>
           <tbody>
-            {petData.map((e) => (
+            {petData.map((e, index) => (
               <TableRow
-                key={e.id}
-                id={e.id}
+                key={e._id}
+                id={e._id}
+                sn={index + 1}
                 name={e.name}
                 city={e.city}
                 address={e.address}

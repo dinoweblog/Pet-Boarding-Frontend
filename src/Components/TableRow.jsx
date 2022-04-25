@@ -1,8 +1,16 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
+const Tr = styled.tr`
+  :hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+  }
+`;
+
 export const TableRow = ({
   id,
+  sn,
   name,
   city,
   address,
@@ -13,13 +21,13 @@ export const TableRow = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <tr
+    <Tr
       className="row"
       onClick={() => {
         navigate(`/listing/${id}`);
       }}
     >
-      <td>{id}</td>
+      <td>{sn}</td>
       <td>{name}</td>
       <td>{city}</td>
       <td>{address}</td>
@@ -27,6 +35,6 @@ export const TableRow = ({
       <td>{cost_per_day}</td>
       <td>{verified}</td>
       <td>{rating}</td>
-    </tr>
+    </Tr>
   );
 };

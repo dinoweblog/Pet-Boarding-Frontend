@@ -1,9 +1,13 @@
 body{
 background-color: #ECECEC;
+overflow-x: hidden;
 }
 .App {
   text-align: center;
-  
+}
+
+a:hover{
+  color:#55D8C1;
 }
 
 .App-logo {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   petsErrorFun,
   petsLoadingFun,
@@ -9,11 +9,16 @@ import {
 } from "../Redux/Pets/action";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+
+const H2 = styled.h2`
+  text-align: center;
+`;
 const Div = styled.div`
-  width: 40%;
+  width: 30%;
   padding: 30px;
   box-sizing: border-box;
-  border: 1px solid green;
+  background-color: white;
+  border-radius: 8px;
   margin: auto;
   margin-top: 50px;
   margin-bottom: 50px;
@@ -22,10 +27,22 @@ const Div = styled.div`
     flex-direction: column;
     gap: 20px;
 
-    input {
-      height: 30px;
+    input,
+    select {
+      height: 33px;
+      padding-left: 15px;
       outline: none;
-      padding-left: 10px;
+      border: 1px solid #dddddd;
+    }
+    input[type="submit"] {
+      height: 38px;
+      border: none;
+      background-color: #a85cf9;
+      color: white;
+      font-size: 17px;
+      :hover {
+        opacity: 0.9;
+      }
     }
   }
 `;
@@ -51,6 +68,8 @@ export const CreateListingPage = () => {
   const [outdoor_area_size, setOutdoor_area_size] = useState("");
   const [emergency_transport, setEmergencyTransport] = useState("");
 
+  const { token } = useSelector((state) => state.login);
+
   const dispatch = useDispatch();
 
   const dataDetails = {
@@ -61,31 +80,32 @@ export const CreateListingPage = () => {
     cost_per_day,
     verified,
     rating,
-    summary,
-    watch_time,
-    pet_types,
-    pet_types,
-    pet_size,
-    supervision_level,
-    live_place,
-    sleep_place,
-    no_of_potty_breaks,
-    no_of_walks,
-    my_home,
-    outdoor_area_size,
-    emergency_transport,
+
+    // summary,
+    // watch_time,
+    // pet_types,
+    // pet_types,
+    // pet_size,
+    // supervision_level,
+    // live_place,
+    // sleep_place,
+    // no_of_potty_breaks,
+    // no_of_walks,
+    // my_home,
+    // outdoor_area_size,
+    // emergency_transport,
   };
 
-  const handleForm = () => {
-    // axios
-    //   .post("http://localhost:3000/pets_data", dataDetails)
-    //   .catch((error) => console.log(error));
-    dispatch(petsLoadingFun);
-    fetch(`http://localhost:3000/pets_data`, {
+  const handleForm = (e) => {
+    e.preventDefault();
+
+    dispatch(petsLoadingFun());
+    fetch(`https://pet-boarding-server.herokuapp.com/listing/create`, {
       method: "POST",
       body: JSON.stringify(dataDetails),
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
     })
       .then((res) => res.json())
@@ -98,9 +118,16 @@ export const CreateListingPage = () => {
   return (
     <div>
       <Navbar />
+      <H2>Create Listing</H2>
       <Div>
-        <form onSubmit={handleForm} className="form">
+        <form
+          onSubmit={(e) => {
+            handleForm(e);
+          }}
+          className="form"
+        >
           <input
+            required
             type="text"
             placeholder="Name"
             name=""
@@ -110,6 +137,7 @@ export const CreateListingPage = () => {
             }}
           />
           <input
+            required
             type="text"
             placeholder="City"
             name="City"
@@ -119,6 +147,7 @@ export const CreateListingPage = () => {
             }}
           />
           <input
+            required
             type="text"
             placeholder="Address"
             name=""
@@ -128,6 +157,7 @@ export const CreateListingPage = () => {
             }}
           />
           <input
+            required
             type="number"
             placeholder="Capacity"
             name=""
@@ -137,6 +167,7 @@ export const CreateListingPage = () => {
             }}
           />
           <input
+            required
             type="number"
             placeholder="Cost per day"
             name=""
@@ -145,16 +176,21 @@ export const CreateListingPage = () => {
               setCostPerCity(e.target.value);
             }}
           />
-          <input
-            type="text"
-            placeholder="Verified"
+          <select
+            required
             name=""
-            value={verified}
+            id=""
             onChange={(e) => {
               setVerified(e.target.value);
             }}
-          />
+          >
+            <option value="">Verified</option>
+            <option value="yes">yes</option>
+            <option value="no">no</option>
+          </select>
+
           <input
+            required
             type="number"
             placeholder="Rating"
             name=""
@@ -164,7 +200,7 @@ export const CreateListingPage = () => {
             }}
           />
 
-          <textarea
+          {/* <textarea
             name=""
             id=""
             cols="30"
@@ -273,7 +309,7 @@ export const CreateListingPage = () => {
             onChange={(e) => {
               setEmergencyTransport(e.target.value);
             }}
-          />
+          /> */}
           <input type="submit" />
         </form>
       </Div>
