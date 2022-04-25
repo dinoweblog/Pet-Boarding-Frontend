@@ -60,7 +60,7 @@ export const Navbar = () => {
               navigate("/");
             }}
           >
-            PetCare.com
+            PetCare
           </h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}

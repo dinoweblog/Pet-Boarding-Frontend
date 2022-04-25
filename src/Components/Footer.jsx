@@ -23,7 +23,7 @@ export const Footer = () => {
   return (
     <Div>
       <Link to={"/"}>Home</Link>
-      <p>© 2022 petcare.com | created by Dinesh Sharma</p>
+      <p>© 2022 petcare | created by Dinesh Sharma</p>
     </Div>
   );
 };
