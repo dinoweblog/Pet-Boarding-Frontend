@@ -15,12 +15,13 @@ export const petsErrorFun = () => ({
   type: PETS_SUCCESS,
 });
 
-export const getPetsData = () => (dispatch) => {
+export const getPetsData = (page, size) => (dispatch) => {
   dispatch(petsLoadingFun());
-  fetch(`https://pet-boarding-server.herokuapp.com/`)
+  fetch(`https://pet-boarding-server.herokuapp.com?page=${page}&size=${size}`)
     .then((res) => res.json())
     .then((res) => {
-      dispatch(petsSuccessFun(res));
+      dispatch(petsSuccessFun({ pets: res.pets, totalPages: res.totalPages }));
+      console.log(res);
     })
     .catch((error) => dispatch(petsErrorFun()));
 };

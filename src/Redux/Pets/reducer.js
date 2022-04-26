@@ -4,6 +4,7 @@ const initState = {
   loading: false,
   error: false,
   pets: [],
+  totalPages: 0,
 };
 
 export const petsReducer = (store = initState, { type, payload }) => {
@@ -15,7 +16,8 @@ export const petsReducer = (store = initState, { type, payload }) => {
         ...store,
         loading: false,
         error: false,
-        pets: [...payload],
+        pets: [...payload.pets],
+        totalPages: payload.totalPages,
       };
     case PETS_ERROR:
       return {

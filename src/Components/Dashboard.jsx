@@ -5,6 +5,7 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { getUsersPetsData } from "../Redux/UsersPets/action";
 import { TableRowAdmin } from "./TableRowAdmin";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -101,6 +102,7 @@ export const Dashboard = () => {
   const [petData, setPetData] = useState([...usersPets]);
   const [petDataApprove, setPetDataApprove] = useState([]);
   const [count, setCount] = useState(0);
+  const navigate = useNavigate();
   const { token, isAuthenticated, roles, user } = useSelector(
     (state) => state.login
   );
@@ -138,12 +140,14 @@ export const Dashboard = () => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-    }).then((res) => {
-      setCount(count + 1);
-      filter();
-      filter2();
-    });
-    setCount(count + 1);
+    })
+      .then((res) => {
+        filter();
+        filter2();
+      })
+      .then(() => {
+        navigate("/users/dashboard");
+      });
   };
 
   return (
@@ -158,7 +162,7 @@ export const Dashboard = () => {
           <p>Mobile : {user.mobile}</p>
         </div>
 
-        <h1>Approval Request</h1>
+        <h2>Approval Request</h2>
         <table>
           <thead>
             <tr>
@@ -200,7 +204,7 @@ export const Dashboard = () => {
           </tbody>
         </table>
 
-        <h1>Approval Accepted</h1>
+        <h2>Approval Accepted</h2>
         <table className="approved_table">
           <thead>
             <tr>

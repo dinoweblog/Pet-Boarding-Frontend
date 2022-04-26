@@ -7,7 +7,6 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 
 const Container = styled.div`
-  
   width: 100%;
   .top-text {
     width: 50%;
@@ -91,24 +90,31 @@ export const Home = () => {
   const [city, setCity] = useState("");
   const [verify, setVerify] = useState("yes");
   const [costCheck, setCostCheck] = useState(true);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(5);
   const [ratingCheck, setRatingCheck] = useState(true);
   const dispatch = useDispatch();
 
-  let { pets } = useSelector((state) => state.pets);
+  let { pets, totalPages } = useSelector((state) => state.pets);
   const [petData, setPetData] = useState([...pets]);
+  const [btn, setBtn] = useState(new Array(totalPages).fill("a"));
+
   useEffect(() => {
-    dispatch(getPetsData());
-  }, []);
+    dispatch(getPetsData(page, size));
+  }, [page]);
 
   useEffect(() => {
     setPetData([...pets]);
   }, [pets, dispatch]);
 
+  useEffect(() => {
+    setBtn(new Array(totalPages).fill("btn"));
+  }, [totalPages, dispatch]);
+
   const searchCity = () => {
     const t = pets.filter(
       (el) => el.city.toLowerCase().indexOf(city.toLowerCase()) !== -1
     );
-
     setPetData([...t]);
   };
 
@@ -154,9 +160,6 @@ export const Home = () => {
     setPetData([...t]);
   };
 
-  // console.log("petData", petData);
-  // console.log("filter", city);
-
   return (
     <Container>
       <Navbar />
@@ -182,13 +185,13 @@ export const Home = () => {
             <p>Filter by City And Verified</p>
             <div>
               <button onClick={filterItemsV}>Verified</button>
-              <button onClick={filterCity}>Verified</button>
+              <button onClick={filterCity}>City</button>
             </div>
           </div>
           <div className="sort">
             <p>Sort By</p>
             <div>
-              <button onClick={SortByCost}>Cost</button>
+              <button onClick={SortByCost}>Cost Per Day</button>
               <button onClick={SortByRating}>Rating</button>
             </div>
           </div>
@@ -245,6 +248,41 @@ export const Home = () => {
             ))}
           </tbody>
         </table>
+
+        <div className="pagination">
+          {page === 1 ? (
+            <button disabled>Prev</button>
+          ) : (
+            <button
+              onClick={() => {
+                setPage(page - 1);
+              }}
+            >
+              Prev
+            </button>
+          )}
+
+          {btn.map((e, index) => (
+            <button
+              onClick={() => {
+                setPage(index + 1);
+              }}
+            >
+              {index + 1}
+            </button>
+          ))}
+          {page === totalPages ? (
+            <button disabled>Next</button>
+          ) : (
+            <button
+              onClick={() => {
+                setPage(page + 1);
+              }}
+            >
+              Next
+            </button>
+          )}
+        </div>
       </Div>
       <Footer />
     </Container>
