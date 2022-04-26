@@ -5,6 +5,7 @@ import { TableRow } from "./TableRow";
 import styled from "styled-components";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import loading_gif from "../images/loading-gif.png";
 
 const Container = styled.div`
   width: 100%;
@@ -27,10 +28,28 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: center;
 
+  .pagination {
+    margin: auto;
+    margin-top: 30px;
+    gap: 5px;
+    display: inline-block;
+    button {
+      color: black;
+      padding: 8px 16px;
+      text-decoration: none;
+      transition: background-color 0.4s;
+      border: 1px solid #ddd;
+      font-size: 15px;
+    }
+  }
+
   table {
     border-collapse: collapse;
-    text-align: left;
+    /* text-align: left; */
 
+    tbody {
+      height: 315px;
+    }
     thead {
       border-bottom: 1px solid #dddddd;
       border-top: 1px solid #dddddd;
@@ -43,6 +62,8 @@ const Div = styled.div`
       padding: 20px;
     }
     tr {
+      /* height: 63px; */
+      box-sizing: border-box;
       border-bottom: 1px solid #dddddd;
     }
   }
@@ -84,6 +105,13 @@ const Div = styled.div`
       margin-right: 20px;
     }
   }
+
+  .loading_img {
+    width: 100px;
+    img {
+      width: 100%;
+    }
+  }
 `;
 
 export const Home = () => {
@@ -92,7 +120,11 @@ export const Home = () => {
   const [costCheck, setCostCheck] = useState(true);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(5);
+  const [height, setHeight] = useState(315);
   const [ratingCheck, setRatingCheck] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [isActive, setActive] = useState({ isVisible: false });
+
   const dispatch = useDispatch();
 
   let { pets, totalPages } = useSelector((state) => state.pets);
@@ -100,7 +132,7 @@ export const Home = () => {
   const [btn, setBtn] = useState(new Array(totalPages).fill("a"));
 
   useEffect(() => {
-    dispatch(getPetsData(page, size));
+    dispatch(getPetsData(page, size, setLoading));
   }, [page]);
 
   useEffect(() => {
@@ -231,22 +263,39 @@ export const Home = () => {
               <th>Rating</th>
             </tr>
           </thead>
-          <tbody>
-            {petData.map((e, index) => (
-              <TableRow
-                key={e._id}
-                id={e._id}
-                sn={index + 1}
-                name={e.name}
-                city={e.city}
-                address={e.address}
-                capacity={e.capacity}
-                cost_per_day={e.cost_per_day}
-                verified={e.verified}
-                rating={e.rating}
-              />
-            ))}
-          </tbody>
+          {loading ? (
+            <tbody className="loading" style={{ height: `${height}px` }}>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td className="loading_img">
+                  <img src={loading_gif} alt="" />
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          ) : (
+            <tbody>
+              {petData.map((e, index) => (
+                <TableRow
+                  key={e._id}
+                  id={e._id}
+                  sn={index + 1}
+                  name={e.name}
+                  city={e.city}
+                  address={e.address}
+                  capacity={e.capacity}
+                  cost_per_day={e.cost_per_day}
+                  verified={e.verified}
+                  rating={e.rating}
+                />
+              ))}
+            </tbody>
+          )}
         </table>
 
         <div className="pagination">
@@ -254,8 +303,10 @@ export const Home = () => {
             <button disabled>Prev</button>
           ) : (
             <button
+              className={isActive ? "active" : null}
               onClick={() => {
                 setPage(page - 1);
+                setLoading(true);
               }}
             >
               Prev
@@ -264,8 +315,10 @@ export const Home = () => {
 
           {btn.map((e, index) => (
             <button
+              className={isActive ? "active" : null}
               onClick={() => {
                 setPage(index + 1);
+                setLoading(true);
               }}
             >
               {index + 1}
@@ -275,8 +328,10 @@ export const Home = () => {
             <button disabled>Next</button>
           ) : (
             <button
+              className={isActive ? "active" : null}
               onClick={() => {
                 setPage(page + 1);
+                setLoading(true);
               }}
             >
               Next
