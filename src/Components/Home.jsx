@@ -112,6 +112,25 @@ const Div = styled.div`
       width: 100%;
     }
   }
+
+  .icons {
+    font-size: 18px;
+    display: flex;
+
+    gap: 20px;
+  }
+  .icons i {
+    padding: 0;
+    margin: 0;
+  }
+  .delete {
+    color: red;
+    cursor: pointer;
+  }
+  .edit {
+    color: green;
+    cursor: pointer;
+  }
 `;
 
 export const Home = () => {
