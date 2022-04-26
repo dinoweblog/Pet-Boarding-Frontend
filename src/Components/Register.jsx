@@ -142,7 +142,7 @@ export const Register = () => {
             Navigate("/login");
           }}
         >
-          Submit
+          Register
         </button>
       </Div>
       <Footer />

@@ -11,14 +11,27 @@ import { PrivateRoute } from "./Routes/PrivateRoute";
 import { CreatePets } from "./Components/CreatePets";
 import { Successfull } from "./Components/SuccessPage";
 import { Booking } from "./Components/Booking";
+import { Dashboard } from "./Components/Dashboard";
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.login);
 
+  console.log("isAuthenticated", isAuthenticated);
+
   return (
     <Routes>
       <Route path="/" element={<Home />}></Route>
+
       <Route path="/listing/:id" element={<ListingPage />}></Route>
+
+      <Route
+        path="/users/dashboard"
+        element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <Dashboard />
+          </PrivateRoute>
+        }
+      ></Route>
       <Route
         path="/listing/create"
         element={
@@ -43,7 +56,14 @@ function App() {
           </PrivateRoute>
         }
       ></Route>
-      <Route path="/users/booking" element={<Booking />}></Route>
+      <Route
+        path="/users/booking"
+        element={
+          <PrivateRoute isAuthenticated={isAuthenticated}>
+            <Booking />
+          </PrivateRoute>
+        }
+      ></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Register />}></Route>
     </Routes>

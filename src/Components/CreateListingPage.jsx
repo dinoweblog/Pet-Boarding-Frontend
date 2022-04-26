@@ -14,8 +14,8 @@ const H2 = styled.h2`
   text-align: center;
 `;
 const Div = styled.div`
-  width: 30%;
-  padding: 30px;
+  width: 38%;
+  padding: 3%;
   box-sizing: border-box;
   background-color: white;
   border-radius: 8px;

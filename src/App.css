@@ -1,9 +1,15 @@
 body{
 background-color: #ECECEC;
 overflow-x: hidden;
+
+}
+
+button, a{
+  cursor: pointer;
 }
 .App {
   text-align: center;
+  min-height: 1900px;
 }
 
 a:hover{

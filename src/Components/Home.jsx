@@ -7,7 +7,7 @@ import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 
 const Container = styled.div`
-  min-height: 900px;
+  
   width: 100%;
   .top-text {
     width: 50%;

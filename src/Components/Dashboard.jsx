@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { getUsersPetsData } from "../Redux/UsersPets/action";
-import { TableRowUser } from "./TableRowUser";
+import { TableRowAdmin } from "./TableRowAdmin";
 
 const Container = styled.div`
   width: 100%;
@@ -27,7 +27,6 @@ const Div = styled.div`
     p {
       margin: 0;
       padding: 0;
-      
     }
     span {
       font-size: 28px;
@@ -47,11 +46,25 @@ const Div = styled.div`
     }
     th,
     td {
-      padding: 15px 10px;
+      padding: 20px 10px;
     }
     tr {
       border-bottom: 1px solid #dddddd;
     }
+  }
+
+  .approved_table p {
+    padding: 0;
+    margin: 0;
+    color: green;
+    font-weight: 600;
+  }
+  table button {
+    background-color: black;
+    border: 1px solid gray;
+    color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
   }
   .filter_sort {
     display: flex;
@@ -81,15 +94,13 @@ const Div = styled.div`
   }
 `;
 
-export const Booking = () => {
-  const [city, setCity] = useState("");
-  const [verify, setVerify] = useState("yes");
-  const [costCheck, setCostCheck] = useState(true);
-  const [ratingCheck, setRatingCheck] = useState(true);
+export const Dashboard = () => {
   const dispatch = useDispatch();
 
   let { usersPets } = useSelector((state) => state.usersPets);
   const [petData, setPetData] = useState([...usersPets]);
+  const [petDataApprove, setPetDataApprove] = useState([]);
+  const [count, setCount] = useState(0);
   const { token, isAuthenticated, roles, user } = useSelector(
     (state) => state.login
   );
@@ -100,60 +111,40 @@ export const Booking = () => {
 
   useEffect(() => {
     setPetData([...usersPets]);
+    filter();
+    filter2();
   }, [usersPets, dispatch]);
 
-  //   const filterItems = () => {
-  //     const t = pets.filter(
-  //       (el) => el.city.toLowerCase().indexOf(city.toLowerCase()) !== -1
-  //     );
+  useEffect(() => {}, [count]);
 
-  //     setPetData([...t]);
-  //   };
+  const filter = () => {
+    const f = usersPets.filter((el) => el.approval_status === "Pending");
 
-  //   const filterItemsV = () => {
-  //     const t = pets.filter(
-  //       (el) => el.verified.toLowerCase() === verify.toLowerCase()
-  //     );
-  //     verify === "yes" ? setVerify("no") : setVerify("yes");
-  //     setPetData([...t]);
-  //   };
+    setPetData([...f]);
+  };
 
-  // const filterCity = () => {
-  //   const t = pets.filter(
-  //     (el) => el.city.toLowerCase() === verify.toLowerCase()
-  //   );
-  //   verify === "yes" ? setVerify("no") : setVerify("yes");
-  //   setPetData([...t]);
-  // };
+  const filter2 = () => {
+    const f = usersPets.filter((el) => el.approval_status === "Approved");
 
-  //   const SortByCost = () => {
-  //     const t = costCheck
-  //       ? pets.sort((a, b) => {
-  //           return a.cost_per_day - b.cost_per_day;
-  //         })
-  //       : pets.sort((a, b) => {
-  //           return b.cost_per_day - a.cost_per_day;
-  //         });
+    setPetDataApprove([...f]);
+  };
 
-  //     costCheck ? setCostCheck(false) : setCostCheck(true);
-
-  //     setPetData([...t]);
-  //   };
-
-  //   const SortByRating = () => {
-  //     const t = ratingCheck
-  //       ? pets.sort((a, b) => {
-  //           return a.rating - b.rating;
-  //         })
-  //       : pets.sort((a, b) => {
-  //           return b.rating - a.rating;
-  //         });
-  //     ratingCheck ? setRatingCheck(false) : setRatingCheck(true);
-  //     setPetData([...t]);
-  //   };
-
-  // console.log("petData", petData);
-  // console.log("filter", city);
+  const handleApprove = (id) => {
+    console.log(id);
+    fetch(`https://pet-boarding-server.herokuapp.com/approval/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ approval_status: "Approved" }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }).then((res) => {
+      setCount(count + 1);
+      filter();
+      filter2();
+    });
+    setCount(count + 1);
+  };
 
   return (
     <Container>
@@ -167,7 +158,7 @@ export const Booking = () => {
           <p>Mobile : {user.mobile}</p>
         </div>
 
-        <h1>Your Booking</h1>
+        <h1>Approval Request</h1>
         <table>
           <thead>
             <tr>
@@ -180,12 +171,53 @@ export const Booking = () => {
               <th>Pet Size</th>
               <th>No Of Pets</th>
               <th>No Of Days</th>
-              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            {petData.map((e, index) => (
-              <TableRowUser
+            {petData.length === 0 ? (
+              <h4>Empty!</h4>
+            ) : (
+              petData.map((e, index) => (
+                <TableRowAdmin
+                  key={e._id}
+                  id={e._id}
+                  sn={index + 1}
+                  name={e.name}
+                  city={e.city}
+                  address={e.address}
+                  mobile={e.mobile}
+                  pet_type={e.pet_type}
+                  weight={e.weight}
+                  no_of_pets={e.no_of_pets}
+                  no_of_days={e.no_of_days}
+                  approval_status={e.approval_status}
+                  status="Approve"
+                  button="button"
+                  handleApprove={handleApprove}
+                />
+              ))
+            )}
+          </tbody>
+        </table>
+
+        <h1>Approval Accepted</h1>
+        <table className="approved_table">
+          <thead>
+            <tr>
+              <th>S.N.</th>
+              <th>Name</th>
+              <th>City</th>
+              <th>Address</th>
+              <th>Mobile</th>
+              <th>Pet Type</th>
+              <th>Pet Size</th>
+              <th>No Of Pets</th>
+              <th>No Of Days</th>
+            </tr>
+          </thead>
+          <tbody>
+            {petDataApprove.map((e, index) => (
+              <TableRowAdmin
                 key={e._id}
                 id={e._id}
                 sn={index + 1}
@@ -197,8 +229,10 @@ export const Booking = () => {
                 weight={e.weight}
                 no_of_pets={e.no_of_pets}
                 no_of_days={e.no_of_days}
-                color={e.approval_status === "Pending" ? "red" : "green"}
                 approval_status={e.approval_status}
+                status="Approved"
+                button="p"
+                handleApprove={handleApprove}
               />
             ))}
           </tbody>

@@ -41,11 +41,12 @@ export const Navbar = () => {
               navigate("/");
             }}
           >
-            PetCare.com
+            PetCare
           </h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}
         <div className="menu">
+          <Link to={"/users/dashboard"}>Dashboard</Link>
           <Link to={"/listing/create"}>Create Listing</Link>
           <Link to={"/"}>Logout</Link>
         </div>
@@ -80,7 +81,7 @@ export const Navbar = () => {
               navigate("/");
             }}
           >
-            PetCare.com
+            PetCare
           </h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}

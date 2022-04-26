@@ -72,15 +72,20 @@ export const Login = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        dispatch(loginSuccess({ token: res.token, roles: res.user.roles }));
-        if (
-          res.token != undefined &&
-          (res.user.roles[0] === "users" || res.user.roles[1] === "users")
-        ) {
+        dispatch(
+          loginSuccess({
+            token: res.token,
+            roles: res.user.roles,
+            user: res.user,
+          })
+        );
+        dispatch(loginAuthenticated("true"));
+        navigate("/");
+        if (res.token != undefined) {
           dispatch(loginAuthenticated("true"));
           navigate("/");
         } else {
-          dispatch(loginAuthenticated("true"));
+          dispatch(loginAuthenticated("false"));
           navigate("/");
         }
       })
@@ -113,7 +118,7 @@ export const Login = () => {
             handleSubmit();
           }}
         >
-          Submit
+          Login
         </button>
       </Div>
       <Footer />

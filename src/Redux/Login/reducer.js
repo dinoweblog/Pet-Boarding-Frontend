@@ -7,10 +7,11 @@ import {
 
 const initState = {
   loading: false,
-  isAuthenticated: false,
+  isAuthenticated: "false",
   token: "",
   error: false,
-  roles:[]
+  roles: [],
+  user: {},
 };
 
 const loginReducer = (store = initState, { type, payload }) => {
@@ -22,9 +23,10 @@ const loginReducer = (store = initState, { type, payload }) => {
       return {
         ...store,
         loading: false,
-        isAuthenticated: true,
+        isAuthenticated: "true",
         token: payload.token,
-        roles: [...payload.roles]
+        roles: [...payload.roles],
+        user: { ...payload.user },
       };
     case LOGIN_AUTH:
       return {
@@ -37,7 +39,7 @@ const loginReducer = (store = initState, { type, payload }) => {
         ...store,
         loading: false,
         error: true,
-        isAuthenticated: false,
+        isAuthenticated: "false",
       };
     default:
       return store;
