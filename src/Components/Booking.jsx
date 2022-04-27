@@ -19,15 +19,14 @@ const Div = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  min-height: 500px;
   .profile {
-    line-height: 180%;
+    /* line-height: 180%; */
     margin-bottom: 20px;
     h3,
     p {
       margin: 0;
       padding: 0;
-      
     }
     span {
       font-size: 28px;

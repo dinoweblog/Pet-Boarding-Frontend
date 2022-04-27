@@ -147,7 +147,7 @@ export const Register = () => {
             setRoles([e.target.value]);
           }}
         >
-          <option value="">roles</option>
+          <option value="">Roles</option>
           <option value="users">users</option>
           <option value="admin">admin</option>
         </select>
