@@ -10,7 +10,7 @@ const Div = styled.div`
   .background {
     width: 100%;
     height: 400px;
-    background-image: url(https://media.istockphoto.com/photos/christmas-dogs-and-cats-over-white-web-header-picture-id1085114580?k=20&m=1085114580&s=612x612&w=0&h=I168HiLBk03-mx7B9JpJBDl-I2nV2-A0lrUu5zGB5hU=);
+    background-image: url(https://thumbs.dreamstime.com/b/group-cats-dogs-front-white-background-33442671.jpg);
     background-size: cover;
     background-repeat: no-repeat;
   }

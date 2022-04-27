@@ -81,7 +81,7 @@ const Div = styled.div`
     gap: 10%;
     margin-bottom: 20px;
     color: #01d6af;
-    font-weight: 600;
+    font-weight: bold;
   }
   .filter,
   .sort,
@@ -89,22 +89,51 @@ const Div = styled.div`
     display: flex;
     flex-direction: column;
     button {
-      margin-right: 20px;
-      background-color: transparent;
-      border: 1px solid green;
-      border-radius: 4px;
-      padding: 3px 15px;
+      background-color: #ffffff;
+      border: 0;
+      border-radius: 0.5rem;
+      box-sizing: border-box;
+      color: #111827;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      text-align: center;
+      text-decoration: none #d1d5db solid;
+      text-decoration-thickness: auto;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.06);
       cursor: pointer;
-      color: black;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      margin-right: 20px;
+      :hover {
+        background-color: rgb(249, 250, 251);
+      }
+
+      :focus {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+      }
+
+      :focus-visible {
+        box-shadow: none;
+      }
     }
   }
 
   .search-box {
     input {
-      padding-left: 5px;
+      color: #111827;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding-left: 12px;
       height: 25px;
-      border: 1px solid gray;
+      border: 1px solid rgba(0, 0, 0, 0.06);
       outline: none;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+        0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      border-radius: 0.5rem;
     }
   }
   .sort {
