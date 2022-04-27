@@ -10,20 +10,18 @@ import {
 } from "../Redux/Login/action";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
-import logo from "../images/logo.png";
+import cat from "../images/cat.png";
 
 const MainDiv = styled.div``;
 const H1 = styled.h1`
   text-align: center;
 `;
-const LogoImg = styled.div`
+const Img = styled.img`
   position: absolute;
-  top: 5%;
-  right: 30%;
+  top: 17%;
+  right: 34%;
   transform: scaleX(-1);
-  img {
-    width: 50%;
-  }
+  width: 8%;
 `;
 const Nav = styled.div`
   .nav {
@@ -108,9 +106,7 @@ export const Login = () => {
         <Navbar />
       </Nav>
       <H1>Login</H1>
-      <LogoImg className="dog_img">
-        <img src={logo} alt="" />
-      </LogoImg>
+      <Img className="dog_img" src={cat} alt="" />
       <Div>
         <input
           type="text"
