@@ -18,6 +18,14 @@ const Container = styled.div`
   }
 `;
 
+const MainDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
 const Div = styled.div`
   background-color: white;
   width: 80%;
@@ -124,7 +132,7 @@ const Div = styled.div`
     margin: 0;
   }
   .delete {
-    color: red;
+    color: #ff3e4e;
     cursor: pointer;
   }
   .edit {

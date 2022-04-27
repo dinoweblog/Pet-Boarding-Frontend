@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
+import { useState } from "react";
+import Modal from "./Modal";
 
 const Tr = styled.tr`
   :hover {
@@ -21,6 +23,7 @@ export const TableRow = ({
   rating,
 }) => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <Tr
@@ -39,19 +42,13 @@ export const TableRow = ({
         <td>{rating}</td>
       </Tr>
       <td className="icons">
-        <i
-          className="bx bxs-trash-alt delete"
-          onClick={() => {
-            console.log("heelo");
-          }}
-        ></i>
-        <i
-          className="bx bxs-edit-alt edit"
-          onClick={() => {
-            console.log("helll");
-          }}
-        ></i>
+        <i className="bx bxs-trash-alt delete" onClick={() => setIsOpen(true)}></i>
+        <i className="bx bxs-edit-alt edit" onClick={() => setIsOpen(true)}></i>
+        {isOpen && <Modal setIsOpen={setIsOpen} />}
       </td>
+
+      {/* <button onClick={() => setIsOpen(true)}>Open Modal</button>
+      {isOpen && <Modal setIsOpen={setIsOpen} />} */}
     </>
   );
 };
