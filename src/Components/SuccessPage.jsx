@@ -20,7 +20,7 @@ const Div = styled.div`
 
 export const Successfull = () => {
   return (
-    <div>
+    <>
       <Navbar />
       <Div>
         <div>
@@ -33,6 +33,6 @@ export const Successfull = () => {
         <p>Thank you for you choose me!</p>
       </Div>
       <Footer />
-    </div>
+    </>
   );
 };

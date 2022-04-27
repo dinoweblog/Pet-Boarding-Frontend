@@ -10,7 +10,7 @@ const Div = styled.div`
   .background {
     width: 100%;
     height: 400px;
-    background-image: url(https://thumbs.dreamstime.com/b/group-cats-dogs-front-white-background-33442671.jpg);
+    background-image: url(https://www.felican.in/img/topbanner.jpg);
     background-size: cover;
     background-repeat: no-repeat;
   }
