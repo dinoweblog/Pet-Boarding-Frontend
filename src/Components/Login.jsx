@@ -10,7 +10,7 @@ import {
 } from "../Redux/Login/action";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
-import cat from "../images/cat.png";
+import cat from "../images/logo.png";
 
 const MainDiv = styled.div``;
 const H1 = styled.h1`

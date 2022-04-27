@@ -19,11 +19,28 @@ const Container = styled.div`
   }
   .dog_img {
     position: absolute;
-    top: 5%;
-    right: 10%;
+    top: 12%;
+    right: 15%;
     transform: scaleX(-1);
     img {
       width: 50%;
+    }
+  }
+  .quote {
+    width: 80%;
+    margin: auto;
+    height: 300px;
+    padding: 50px 10%;
+    line-height: 170%;
+    text-align: center;
+    box-sizing: border-box;
+    .quote_icon {
+      font-size: 40px;
+      /* position: absolute; */
+    }
+    .bxs-quote-right {
+      margin-top: 10px;
+      position: absolute;
     }
   }
 `;
@@ -272,7 +289,7 @@ export const Home = () => {
         <div className="filter_sort">
           <div className="search-box">
             <p>
-              <i class="bx bxs-search"></i> Search By :
+              <i className="bx bxs-search"></i> Search By :
             </p>
             <input
               type="text"
@@ -287,7 +304,7 @@ export const Home = () => {
           </div>
           <div className="filter">
             <p>
-              <i class="bx bxs-filter-alt"></i> Filter By :
+              <i className="bx bxs-filter-alt"></i> Filter By :
             </p>
             <div>
               <button onClick={filterItemsV}>Verified</button>
@@ -296,7 +313,7 @@ export const Home = () => {
           </div>
           <div className="sort">
             <p>
-              <i class="bx bxs-sort-alt"></i> Sort By :
+              <i className="bx bxs-sort-alt"></i> Sort By :
             </p>
             <div>
               <button onClick={SortByCost}>Cost Per Day</button>
@@ -396,6 +413,7 @@ export const Home = () => {
               onClick={() => {
                 setPage(index + 1);
                 setLoading(true);
+                console.log(page, loading);
               }}
             >
               {index + 1}
@@ -416,6 +434,20 @@ export const Home = () => {
           )}
         </div>
       </Div>
+
+      <div className="quote">
+        <i className="bx bxs-quote-left quote_icon"></i> Pet, any animal kept by
+        human beings as a source of companionship and pleasure. While a pet is
+        generally kept for the pleasure that it can give to its owner, often,
+        especially with horses, dogs, and cats, as well as with some other
+        domesticated animals, this pleasure appears to be mutual. Thus, pet
+        keeping can be described as a symbiotic relationship, one that benefits
+        both animals and human beings. As the keeping of pets has been practiced
+        from prehistoric times to the present and as pets are found in nearly
+        every culture and society, pet keeping apparently satisfies a deep,
+        universal human need. <i className="bx bxs-quote-right quote_icon"></i>
+      </div>
+
       <Footer />
     </Container>
   );

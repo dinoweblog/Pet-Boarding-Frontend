@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
-import cat from "../images/cat.png";
+import cat from "../images/logo.png";
 const H1 = styled.h1`
   text-align: center;
 `;

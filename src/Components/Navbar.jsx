@@ -5,7 +5,7 @@ import { getLogout } from "../Redux/Login/action";
 import logo from "../images/logo.png";
 
 const Div = styled.div`
-  padding: 2px 10%;
+  padding: 8px 10%;
   background-color: #ab46d2;
   color: white;
   display: flex;
@@ -18,7 +18,7 @@ const Div = styled.div`
     align-items: center;
     cursor: pointer;
     img {
-      width: 45%;
+      width: 30%;
     }
 
     :hover {
@@ -29,10 +29,11 @@ const Div = styled.div`
     margin: 0;
     padding: 0;
     cursor: pointer;
-    margin-left: -8px;
+    margin-left: 2px;
   }
   .menu {
     display: flex;
+    align-items: center;
     gap: 20px;
   }
   a {
@@ -64,7 +65,9 @@ export const Navbar = () => {
         </div>
         {/* <Link to={"/"}>Home</Link> */}
         <div className="menu">
-          <Link to={"/users/dashboard"}>Dashboard</Link>
+          <Link to={"/users/dashboard"}>
+            <i className="bx bxs-dashboard"></i> Dashboard
+          </Link>
           <Link to={"/listing/create"}>Create Listing</Link>
           <Link
             to={"/"}
@@ -92,7 +95,9 @@ export const Navbar = () => {
         </div>
         {/* <Link to={"/"}>Home</Link> */}
         <div className="menu">
-          <Link to={"/users/booking"}>Your Booking</Link>
+          <Link to={"/users/booking"}>
+            <i className="bx bxs-bookmarks"></i> Your Booking
+          </Link>
           <Link to={"/pets/create"}>Create Booking</Link>
           <Link
             to={"/"}
