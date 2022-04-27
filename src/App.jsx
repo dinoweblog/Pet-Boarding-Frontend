@@ -40,14 +40,7 @@ function App() {
           </PrivateRoute>
         }
       ></Route>
-      <Route
-        path="/pets/create"
-        element={
-          <PrivateRoute isAuthenticated={isAuthenticated}>
-            <CreatePets />
-          </PrivateRoute>
-        }
-      ></Route>
+      <Route path="/pets/create" element={<CreatePets />}></Route>
       <Route
         path="/users/successfull"
         element={

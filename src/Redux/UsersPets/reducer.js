@@ -2,12 +2,14 @@ import {
   USERS_PETS_LOADING,
   USERS_PETS_SUCCESS,
   USERS_PETS_ERROR,
+  USERS_PETS_BOOKING,
 } from "./action";
 
 const initState = {
   loading: false,
   error: false,
   usersPets: [],
+  AllUsersPets: [],
 };
 
 export const usersPetsReducer = (store = initState, { type, payload }) => {
@@ -20,6 +22,13 @@ export const usersPetsReducer = (store = initState, { type, payload }) => {
         loading: false,
         error: false,
         usersPets: [...payload],
+      };
+    case USERS_PETS_BOOKING:
+      return {
+        ...store,
+        loading: false,
+        error: false,
+        AllUsersPets: [...payload],
       };
     case USERS_PETS_ERROR:
       return {

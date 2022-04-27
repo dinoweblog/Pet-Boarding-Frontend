@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./CSS/Modal.module.css";
 import { RiCloseLine } from "react-icons/ri";
 
-const Modal = ({ setIsOpen }) => {
+const Modal = ({ setIsOpen, deleteData }) => {
   return (
     <>
       <div className={styles.darkBG} onClick={() => setIsOpen(false)} />
@@ -23,7 +23,10 @@ const Modal = ({ setIsOpen }) => {
             <div className={styles.actionsContainer}>
               <button
                 className={styles.deleteBtn}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  deleteData();
+                }}
               >
                 Delete
               </button>

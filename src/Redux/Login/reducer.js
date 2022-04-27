@@ -3,6 +3,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   LOGIN_AUTH,
+  LOGOUT,
 } from "./action";
 
 const initState = {
@@ -12,6 +13,7 @@ const initState = {
   error: false,
   roles: [],
   user: {},
+  userId: ""
 };
 
 const loginReducer = (store = initState, { type, payload }) => {
@@ -27,6 +29,7 @@ const loginReducer = (store = initState, { type, payload }) => {
         token: payload.token,
         roles: [...payload.roles],
         user: { ...payload.user },
+        userId: payload.userId,
       };
     case LOGIN_AUTH:
       return {
@@ -40,6 +43,16 @@ const loginReducer = (store = initState, { type, payload }) => {
         loading: false,
         error: true,
         isAuthenticated: "false",
+      };
+    case LOGOUT:
+      return {
+        ...store,
+        loading: false,
+        isAuthenticated: "false",
+        token: "",
+        error: false,
+        roles: [],
+        user: null,
       };
     default:
       return store;

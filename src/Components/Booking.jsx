@@ -90,12 +90,12 @@ export const Booking = () => {
 
   let { usersPets } = useSelector((state) => state.usersPets);
   const [petData, setPetData] = useState([...usersPets]);
-  const { token, isAuthenticated, roles, user } = useSelector(
+  const { token, isAuthenticated, roles, user, userId } = useSelector(
     (state) => state.login
   );
 
   useEffect(() => {
-    dispatch(getUsersPetsData());
+    dispatch(getUsersPetsData(userId));
   }, []);
 
   useEffect(() => {

@@ -25,10 +25,19 @@
   border-radius: 16px;
   box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
 }
-
+.modal2 {
+  width: 89%;
+  height: 260px;
+  background-color: white;
+  color: white;
+  z-index: 10;
+  border-radius: 16px;
+  padding: 6%;
+  box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.04);
+}
 .modalHeader {
   height: 50px;
-  background: white;
+  /* background: white; */
   overflow: hidden;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
@@ -124,3 +133,4 @@
   transform: none;
   background: whitesmoke;
 }
+

@@ -30,7 +30,7 @@ const Div = styled.div`
     height: 33px;
     padding-left: 15px;
     outline: none;
-    border: 1px solid #DDDDDD;
+    border: 1px solid #dddddd;
   }
   button {
     height: 38px;
@@ -115,13 +115,18 @@ export const Register = () => {
           onChange={(e) => setMobile(e.target.value)}
         />
 
-        <input
+        <select
           required
-          type="text"
-          placeholder="Enter Gender"
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-        />
+          name=""
+          id=""
+          onChange={(e) => {
+            setGender(e.target.value);
+          }}
+        >
+          <option value="">Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
 
         <select
           required

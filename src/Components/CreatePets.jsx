@@ -57,7 +57,7 @@ export const CreatePets = () => {
   const [no_of_pets, setNo_of_pets] = useState("");
   const [no_of_days, setNo_of_days] = useState("");
 
-  const { token } = useSelector((state) => state.login);
+  const { token, userId } = useSelector((state) => state.login);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,6 +71,7 @@ export const CreatePets = () => {
     weight,
     no_of_pets,
     no_of_days,
+    user_id: userId,
   };
 
   const handleForm = (e) => {
@@ -187,7 +188,7 @@ export const CreatePets = () => {
             }}
           />
 
-          <input type="submit"  />
+          <input type="submit" />
         </form>
       </Div>
       <Footer />

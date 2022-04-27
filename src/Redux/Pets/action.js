@@ -1,12 +1,18 @@
 export const PETS_LOADING = "PETS_LOADING";
 export const PETS_SUCCESS = "PETS_SUCCESS";
 export const PETS_ERROR = "PETS_ERROR";
+export const PETS_DELETE = "PETS_DELETE";
 
 export const petsLoadingFun = () => ({
   type: PETS_LOADING,
 });
 
 export const petsSuccessFun = (payload) => ({
+  type: PETS_SUCCESS,
+  payload,
+});
+
+export const petsDeleteFun = (payload) => ({
   type: PETS_SUCCESS,
   payload,
 });

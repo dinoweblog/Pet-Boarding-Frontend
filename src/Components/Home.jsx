@@ -53,7 +53,7 @@ const Div = styled.div`
 
   table {
     border-collapse: collapse;
-    /* text-align: left; */
+    text-align: left;
 
     tbody {
       height: 315px;
@@ -149,6 +149,7 @@ export const Home = () => {
   const [size, setSize] = useState(5);
   const [height, setHeight] = useState(315);
   const [ratingCheck, setRatingCheck] = useState(true);
+  const [alpha, setAlpha] = useState(true);
   const [loading, setLoading] = useState(true);
   const [isActive, setActive] = useState({ isVisible: false });
 
@@ -186,10 +187,10 @@ export const Home = () => {
   };
 
   const filterCity = () => {
-    const t = pets.filter(
-      (el) => el.city.toLowerCase() === verify.toLowerCase()
-    );
-    verify === "yes" ? setVerify("no") : setVerify("yes");
+    const t = alpha
+      ? pets.sort((a, b) => a.city.localeCompare(b.city))
+      : pets.sort((a, b) => b.city.localeCompare(a.city));
+    alpha ? setAlpha(false) : setAlpha(true);
     setPetData([...t]);
   };
 
@@ -277,6 +278,7 @@ export const Home = () => {
             </select>
           </div> */}
         </div>
+
         <table>
           <thead>
             <tr>

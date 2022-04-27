@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
-import { getUsersPetsData } from "../Redux/UsersPets/action";
+import { allGetUsersPetsData } from "../Redux/UsersPets/action";
 import { TableRowAdmin } from "./TableRowAdmin";
 import { useNavigate } from "react-router-dom";
 
@@ -98,8 +98,8 @@ const Div = styled.div`
 export const Dashboard = () => {
   const dispatch = useDispatch();
 
-  let { usersPets } = useSelector((state) => state.usersPets);
-  const [petData, setPetData] = useState([...usersPets]);
+  let { AllUsersPets } = useSelector((state) => state.usersPets);
+  const [petData, setPetData] = useState([...AllUsersPets]);
   const [petDataApprove, setPetDataApprove] = useState([]);
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
@@ -108,25 +108,25 @@ export const Dashboard = () => {
   );
 
   useEffect(() => {
-    dispatch(getUsersPetsData());
+    dispatch(allGetUsersPetsData());
   }, []);
 
   useEffect(() => {
-    setPetData([...usersPets]);
+    setPetData([...AllUsersPets]);
     filter();
     filter2();
-  }, [usersPets, dispatch]);
+  }, [AllUsersPets, dispatch]);
 
   useEffect(() => {}, [count]);
 
   const filter = () => {
-    const f = usersPets.filter((el) => el.approval_status === "Pending");
+    const f = AllUsersPets.filter((el) => el.approval_status === "Pending");
 
     setPetData([...f]);
   };
 
   const filter2 = () => {
-    const f = usersPets.filter((el) => el.approval_status === "Approved");
+    const f = AllUsersPets.filter((el) => el.approval_status === "Approved");
 
     setPetDataApprove([...f]);
   };

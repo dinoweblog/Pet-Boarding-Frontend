@@ -76,7 +76,7 @@ export const ListingPage = () => {
   };
 
   const handleBook = () => {
-    navigate("/pets/create");
+    token != "" ? navigate("/pets/create") : navigate("/login");
   };
 
   return (

@@ -77,6 +77,7 @@ export const Login = () => {
             token: res.token,
             roles: res.user.roles,
             user: res.user,
+            userId: res.user._id
           })
         );
         dispatch(loginAuthenticated("true"));
