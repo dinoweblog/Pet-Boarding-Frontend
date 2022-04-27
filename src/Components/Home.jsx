@@ -6,15 +6,25 @@ import styled from "styled-components";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import loading_gif from "../images/loading-gif.png";
+import logo from "../images/logo.png";
 
 const Container = styled.div`
   width: 100%;
   .top-text {
-    width: 50%;
+    width: 40%;
     margin: auto;
     margin-bottom: 30px;
     text-align: center;
-    color: #00092c;
+    color: #01d6af;
+  }
+  .dog_img {
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    transform: scaleX(-1);
+    img {
+      width: 50%;
+    }
   }
 `;
 
@@ -62,7 +72,7 @@ const Div = styled.div`
       border-bottom: 1px solid #dddddd;
       border-top: 1px solid #dddddd;
       tr {
-        color: #01d6af;
+        color: #ab46d2;
       }
     }
     th,
@@ -80,8 +90,8 @@ const Div = styled.div`
     display: flex;
     gap: 10%;
     margin-bottom: 20px;
-    color: #01d6af;
-    font-weight: bold;
+    color: #ab46d2;
+    font-weight: 600;
   }
   .filter,
   .sort,
@@ -124,7 +134,7 @@ const Div = styled.div`
 
   .search-box {
     input {
-      color: #111827;
+      color: #1d2029;
       font-size: 0.875rem;
       font-weight: 600;
       padding-left: 12px;
@@ -253,12 +263,17 @@ export const Home = () => {
     <Container>
       <Navbar />
       <Div>
+        <div className="dog_img">
+          <img src={logo} alt="" />
+        </div>
         <h2 className="top-text">
           Some Pet Boarding Locaton, Plans and All Details.
         </h2>
         <div className="filter_sort">
           <div className="search-box">
-            <p>Search By City</p>
+            <p>
+              <i class="bx bxs-search"></i> Search By :
+            </p>
             <input
               type="text"
               name=""
@@ -271,14 +286,18 @@ export const Home = () => {
             />
           </div>
           <div className="filter">
-            <p>Filter by City And Verified</p>
+            <p>
+              <i class="bx bxs-filter-alt"></i> Filter By :
+            </p>
             <div>
               <button onClick={filterItemsV}>Verified</button>
               <button onClick={filterCity}>City</button>
             </div>
           </div>
           <div className="sort">
-            <p>Sort By</p>
+            <p>
+              <i class="bx bxs-sort-alt"></i> Sort By :
+            </p>
             <div>
               <button onClick={SortByCost}>Cost Per Day</button>
               <button onClick={SortByRating}>Rating</button>

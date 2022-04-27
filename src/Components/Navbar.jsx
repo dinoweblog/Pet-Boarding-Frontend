@@ -2,18 +2,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getLogout } from "../Redux/Login/action";
+import logo from "../images/logo.png";
+
 const Div = styled.div`
-  padding: 15px 10%;
+  padding: 2px 10%;
   background-color: #ab46d2;
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  .logo {
+    width: 120px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    img {
+      width: 45%;
+    }
+
+    :hover {
+      opacity: 0.9;
+    }
+  }
   h3 {
     margin: 0;
     padding: 0;
     cursor: pointer;
+    margin-left: -8px;
   }
   .menu {
     display: flex;
@@ -23,6 +39,7 @@ const Div = styled.div`
     text-decoration: none;
     color: white;
     font-weight: 600;
+    font-size: 17px;
   }
   a:hover {
     color: #55d8c1;
@@ -36,14 +53,14 @@ export const Navbar = () => {
   if (roles[0] === "admin")
     return (
       <Div>
-        <div>
-          <h3
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            PetCare
-          </h3>
+        <div
+          className="logo"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <img src={logo} alt="" />
+          <h3>PetCare</h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}
         <div className="menu">
@@ -64,14 +81,14 @@ export const Navbar = () => {
   else if (roles[0] === "users")
     return (
       <Div>
-        <div>
-          <h3
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            PetCare
-          </h3>
+        <div
+          className="logo"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <img src={logo} alt="" />
+          <h3>PetCare</h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}
         <div className="menu">
@@ -92,14 +109,14 @@ export const Navbar = () => {
   else
     return (
       <Div>
-        <div>
-          <h3
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            PetCare
-          </h3>
+        <div
+          className="logo"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <img src={logo} alt="" />
+          <h3>PetCare</h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}
         <div className="menu">

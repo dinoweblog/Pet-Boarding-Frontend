@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
-
+import logo from "../images/logo.png";
 const H1 = styled.h1`
   text-align: center;
 `;
@@ -11,6 +11,16 @@ const H1 = styled.h1`
 const Nav = styled.div`
   .nav {
     border-bottom: 1px solid gray;
+  }
+`;
+
+const LogoImg = styled.div`
+  position: absolute;
+  top: 5%;
+  right: 30%;
+  transform: scaleX(-1);
+  img {
+    width: 50%;
   }
 `;
 
@@ -85,6 +95,9 @@ export const Register = () => {
         <Navbar />
       </Nav>
       <H1>Register</H1>
+      <LogoImg className="dog_img">
+        <img src={logo} alt="" />
+      </LogoImg>
       <Div>
         <input
           required

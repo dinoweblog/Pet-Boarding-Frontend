@@ -10,12 +10,21 @@ import {
 } from "../Redux/Login/action";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
+import logo from "../images/logo.png";
 
 const MainDiv = styled.div``;
 const H1 = styled.h1`
   text-align: center;
 `;
-
+const LogoImg = styled.div`
+  position: absolute;
+  top: 5%;
+  right: 30%;
+  transform: scaleX(-1);
+  img {
+    width: 50%;
+  }
+`;
 const Nav = styled.div`
   .nav {
     border-bottom: 1px solid gray;
@@ -77,7 +86,7 @@ export const Login = () => {
             token: res.token,
             roles: res.user.roles,
             user: res.user,
-            userId: res.user._id
+            userId: res.user._id,
           })
         );
         dispatch(loginAuthenticated("true"));
@@ -99,7 +108,9 @@ export const Login = () => {
         <Navbar />
       </Nav>
       <H1>Login</H1>
-
+      <LogoImg className="dog_img">
+        <img src={logo} alt="" />
+      </LogoImg>
       <Div>
         <input
           type="text"
