@@ -12,10 +12,16 @@ import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 import cat from "../images/logo.png";
 
-const MainDiv = styled.div``;
 const H1 = styled.h1`
   text-align: center;
 `;
+
+const Nav = styled.div`
+  .nav {
+    border-bottom: 1px solid gray;
+  }
+`;
+
 const Img = styled.img`
   position: absolute;
   top: 17%;
@@ -23,11 +29,7 @@ const Img = styled.img`
   transform: scaleX(-1);
   width: 8%;
 `;
-const Nav = styled.div`
-  .nav {
-    border-bottom: 1px solid gray;
-  }
-`;
+
 const Div = styled.div`
   width: 30%;
   margin: auto;
@@ -39,8 +41,8 @@ const Div = styled.div`
   padding: 2%;
   border-radius: 8px;
   margin-top: 30px;
-  margin-bottom: 19%;
-  input {
+  input,
+  select {
     height: 33px;
     padding-left: 15px;
     outline: none;
