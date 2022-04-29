@@ -14,9 +14,12 @@ import cat from "../images/logo.png";
 
 const H1 = styled.h1`
   text-align: center;
+  margin-top: 2%;
 `;
 const MainDiv = styled.div`
-  min-height: 90vh;
+  .footer {
+    margin-top: 25%;
+  }
 `;
 const Nav = styled.div`
   .nav {
@@ -26,7 +29,7 @@ const Nav = styled.div`
 
 const Img = styled.img`
   position: absolute;
-  top: 17%;
+  top: 18%;
   right: 34%;
   transform: scaleX(-1);
   width: 8%;
@@ -133,7 +136,9 @@ export const Login = () => {
           Login
         </button>
       </Div>
-      <Footer />
+      <div className="footer">
+        <Footer />
+      </div>
     </MainDiv>
   );
 };

@@ -6,6 +6,7 @@ import { Navbar } from "./Navbar";
 import cat from "../images/logo.png";
 const H1 = styled.h1`
   text-align: center;
+  margin-top: 2%;
 `;
 
 const Nav = styled.div`
@@ -16,7 +17,7 @@ const Nav = styled.div`
 
 const Img = styled.img`
   position: absolute;
-  top: 17%;
+  top: 18%;
   right: 34%;
   transform: scaleX(-1);
   width: 8%;
@@ -33,6 +34,7 @@ const Div = styled.div`
   padding: 2%;
   border-radius: 8px;
   margin-top: 30px;
+  margin-bottom: 8%;
   input,
   select {
     height: 33px;
