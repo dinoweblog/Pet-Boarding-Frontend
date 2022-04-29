@@ -15,7 +15,9 @@ import cat from "../images/logo.png";
 const H1 = styled.h1`
   text-align: center;
 `;
-
+const MainDiv = styled.div`
+  min-height: 90vh;
+`;
 const Nav = styled.div`
   .nav {
     border-bottom: 1px solid gray;

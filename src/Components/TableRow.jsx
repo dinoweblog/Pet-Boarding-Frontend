@@ -13,10 +13,18 @@ import {
 } from "../Redux/Pets/action";
 import { useDispatch, useSelector } from "react-redux";
 
-const Tr = styled.tr`
-  :hover {
-    background-color: #f2f2f2;
-    cursor: pointer;
+const Div = styled.div`
+  display: flex;
+  border-bottom: 1px solid #dddddd;
+  .row-hover {
+    :hover {
+      background-color: #f2f2f2;
+      cursor: pointer;
+    }
+  }
+  .visit {
+    padding: 20px 0;
+    color: green;
   }
 `;
 
@@ -61,24 +69,24 @@ export const TableRow = ({
   };
 
   return (
-    <>
-      <Tr
-        className="row"
+    <Div>
+      <div
+        className="row row-hover"
         onClick={() => {
           navigate(`/listing/${id}`);
         }}
       >
-        <td>{sn}</td>
-        <td>{name}</td>
-        <td>{city}</td>
-        <td>{address}</td>
-        <td>{capacity}</td>
-        <td>{cost_per_day}</td>
-        <td>{verified}</td>
-        <td>{rating}</td>
-      </Tr>
+        <div className="td sn">{sn}</div>
+        <div className="td">{name}</div>
+        <div className="td">{city}</div>
+        <div className="td">{address}</div>
+        <div className="td">{capacity}</div>
+        <div className="td">{cost_per_day}</div>
+        <div className="td">{verified}</div>
+        <div className="td">{rating}</div>
+      </div>
       {token != "" && roles[0] === "admin" ? (
-        <td className="icons">
+        <div className="icons">
           <i
             className="bx bxs-trash-alt delete"
             onClick={() => setIsOpen(true)}
@@ -89,10 +97,14 @@ export const TableRow = ({
           ></i>
           {isOpen && <Modal deleteData={deleteData} setIsOpen={setIsOpen} />}
           {isOpen2 && <Modal2 id={id} setIsOpen2={setIsOpen2} />}
-        </td>
-      ) : null}
+        </div>
+      ) : (
+        <div className="visit">
+          <i class="bx bx-chevrons-right"></i>
+        </div>
+      )}
       {/* <button onClick={() => setIsOpen(true)}>Open Modal</button>
       {isOpen && <Modal setIsOpen={setIsOpen} />} */}
-    </>
+    </Div>
   );
 };

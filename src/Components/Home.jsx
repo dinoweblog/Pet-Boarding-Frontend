@@ -78,28 +78,39 @@ const Div = styled.div`
     }
   }
 
-  table {
+  .table {
     border-collapse: collapse;
     text-align: left;
-
-    tbody {
+    width: 100%;
+    .tbody {
       height: 315px;
     }
-    thead {
+    .thead {
+      display: flex;
       border-bottom: 1px solid #dddddd;
       border-top: 1px solid #dddddd;
-      tr {
-        color: #ab46d2;
-      }
+      color: #ab46d2;
+      font-weight: bold;
     }
-    th,
-    td {
-      padding: 20px;
+    .row {
+      display: flex;
+      width: 95%;
+      justify-content: space-between;
     }
-    tr {
+    .th,
+    .td {
+      padding: 20px 0;
+      width: calc(100vh / 7);
+    }
+    .sn {
+      width: 30px;
+    }
+    .row {
       /* height: 63px; */
       box-sizing: border-box;
-      border-bottom: 1px solid #dddddd;
+    }
+    .main-head {
+      border-bottom: 0px solid #dddddd;
     }
   }
 
@@ -172,6 +183,7 @@ const Div = styled.div`
 
   .loading_img {
     width: 100px;
+    margin-top: 8%;
     img {
       width: 100%;
     }
@@ -182,6 +194,9 @@ const Div = styled.div`
     display: flex;
 
     gap: 20px;
+    padding: 20px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid #dddddd;
   }
   .icons i {
     padding: 0;
@@ -284,7 +299,7 @@ export const Home = () => {
           <img src={logo} alt="" />
         </div>
         <h2 className="top-text">
-          Some Pet Boarding Locaton, Plans and All Details.
+          Pet Boarding Locaton, Plans and All Details.
         </h2>
         <div className="filter_sort">
           <div className="search-box">
@@ -344,36 +359,37 @@ export const Home = () => {
           </div> */}
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>S.N.</th>
-              <th>Name</th>
-              <th>City</th>
-              <th>Address</th>
-              <th>Capacity</th>
-              <th>Cost Per Day</th>
-              <th>Verified</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
+        <div className="table">
+          <div className="thead">
+            <div className="main-head row">
+              <div className="th sn">S.N.</div>
+              <div className="th">Name</div>
+              <div className="th">City</div>
+              <div className="th">Address</div>
+              <div className="th">Capacity</div>
+              <div className="th">Cost Per Day</div>
+              <div className="th">Verified</div>
+              <div className="th">Rating</div>
+            </div>
+            <div className=""></div>
+          </div>
           {loading ? (
-            <tbody className="loading" style={{ height: `${height}px` }}>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td className="loading_img">
-                  <img src={loading_gif} alt="" />
-                </td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
+            <div className="loading row" style={{ height: `${height}px` }}>
+              <div className="td"></div>
+              <div className="td"></div>
+              <div className="td"></div>
+              <div className="td"></div>
+              <div className="loading_img td">
+                <img src={loading_gif} alt="" />
+              </div>
+
+              <div className="td"></div>
+              <div className="td"></div>
+              <div className="td"></div>
+              <div className="td"></div>
+            </div>
           ) : (
-            <tbody>
+            <div className="tbody">
               {petData.map((e, index) => (
                 <TableRow
                   key={e._id}
@@ -388,9 +404,9 @@ export const Home = () => {
                   rating={e.rating}
                 />
               ))}
-            </tbody>
+            </div>
           )}
-        </table>
+        </div>
 
         <div className="pagination">
           {page === 1 ? (
