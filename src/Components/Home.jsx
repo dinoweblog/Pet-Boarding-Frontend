@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPetsData } from "../../../pet-boarding-site/src/Redux/Pets/action";
-import { TableRow } from "../../../pet-boarding-site/src/Components/TableRow";
+import { getPetsData } from "../Redux/Pets/action";
+import { TableRow } from "./TableRow";
 import styled from "styled-components";
-import { Navbar } from "../../../pet-boarding-site/src/Components/Navbar";
-import { Footer } from "../../../pet-boarding-site/src/Components/Footer";
+import { Navbar } from "./Navbar";
+import { Footer } from "./Footer";
 import loading_gif from "../images/loading-gif.png";
 import logo from "../images/logo.png";
 import "./CSS/Style.css";
