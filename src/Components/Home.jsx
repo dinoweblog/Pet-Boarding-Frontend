@@ -1,31 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPetsData } from "../Redux/Pets/action";
-import { TableRow } from "./TableRow";
+import { getPetsData } from "../../../pet-boarding-site/src/Redux/Pets/action";
+import { TableRow } from "../../../pet-boarding-site/src/Components/TableRow";
 import styled from "styled-components";
-import { Navbar } from "./Navbar";
-import { Footer } from "./Footer";
+import { Navbar } from "../../../pet-boarding-site/src/Components/Navbar";
+import { Footer } from "../../../pet-boarding-site/src/Components/Footer";
 import loading_gif from "../images/loading-gif.png";
 import logo from "../images/logo.png";
+import "./CSS/Style.css";
 
 const Container = styled.div`
   width: 100%;
-  .top-text {
-    width: 40%;
-    margin: auto;
-    margin-bottom: 30px;
-    text-align: center;
-    color: #01d6af;
-  }
-  .dog_img {
-    position: absolute;
-    top: 12%;
-    right: 15%;
-    transform: scaleX(-1);
-    img {
-      width: 50%;
-    }
-  }
+
   .quote {
     width: 80%;
     margin: auto;
@@ -63,6 +49,9 @@ const Div = styled.div`
   flex-direction: column;
   justify-content: center;
 
+  .table_container {
+    overflow-x: auto;
+  }
   .pagination {
     margin: auto;
     margin-top: 30px;
@@ -73,15 +62,27 @@ const Div = styled.div`
       padding: 8px 16px;
       text-decoration: none;
       transition: background-color 0.4s;
-      border: 1px solid #ddd;
+      border: 1px solid #c4c4c4;
       font-size: 15px;
+    }
+
+    .active {
+      background-color: #ab46d2;
+      border: 1px solid #ab46d2;
+      pointer-events: none;
+      color: white;
+    }
+    .nextPrevBtn {
+      pointer-events: none;
+      opacity: 0.7;
     }
   }
 
   .table {
     border-collapse: collapse;
     text-align: left;
-    width: 100%;
+    min-width: 700px;
+    white-space: nowrap;
     .tbody {
       height: 315px;
     }
@@ -213,7 +214,7 @@ const Div = styled.div`
 `;
 
 export const Home = () => {
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState();
   const [verify, setVerify] = useState("yes");
   const [costCheck, setCostCheck] = useState(true);
   const [page, setPage] = useState(1);
@@ -222,7 +223,8 @@ export const Home = () => {
   const [ratingCheck, setRatingCheck] = useState(true);
   const [alpha, setAlpha] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [isActive, setActive] = useState({ isVisible: false });
+  const [isActive, setActive] = useState(false);
+  const [clearShow, setClearShow] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -242,11 +244,19 @@ export const Home = () => {
     setBtn(new Array(totalPages).fill("btn"));
   }, [totalPages, dispatch]);
 
-  const searchCity = () => {
-    const t = pets.filter(
-      (el) => el.city.toLowerCase().indexOf(city.toLowerCase()) !== -1
-    );
-    setPetData([...t]);
+  const searchCity = (e) => {
+    setLoading(true);
+    if (city === "") {
+      dispatch(getPetsData(page, size, setLoading));
+      setClearShow(false);
+    }
+    fetch(`https://pet-boarding-server.herokuapp.com?search=${e.target.value}`)
+      .then((res) => res.json())
+      .then((res) => {
+        setPetData([...res.pets]);
+        setLoading(false);
+      })
+      .catch((error) => console.log(error));
   };
 
   const filterItemsV = () => {
@@ -291,10 +301,16 @@ export const Home = () => {
     setPetData([...t]);
   };
 
+  const clearHandle = () => {
+    dispatch(getPetsData(page, size, setLoading));
+    setClearShow(false);
+    setCity("");
+  };
+
   return (
     <Container>
       <Navbar />
-      <Div>
+      <Div id="content_container">
         <div className="dog_img">
           <img src={logo} alt="" />
         </div>
@@ -305,15 +321,27 @@ export const Home = () => {
           <div className="search-box">
             <p>
               <i className="bx bxs-search"></i> Search By :
+              {clearShow ? (
+                <span
+                  className="clear_all_btn"
+                  onClick={() => {
+                    clearHandle();
+                  }}
+                >
+                  Clear All
+                </span>
+              ) : null}
             </p>
             <input
               type="text"
               name=""
               id=""
+              value={city}
               placeholder="city..."
               onChange={(e) => {
                 setCity(e.target.value);
-                searchCity();
+                searchCity(e);
+                setClearShow(true);
               }}
             />
           </div>
@@ -322,8 +350,22 @@ export const Home = () => {
               <i className="bx bxs-filter-alt"></i> Filter By :
             </p>
             <div>
-              <button onClick={filterItemsV}>Verified</button>
-              <button onClick={filterCity}>City</button>
+              <button
+                onClick={() => {
+                  filterItemsV();
+                  setClearShow(true);
+                }}
+              >
+                Verified
+              </button>
+              <button
+                onClick={() => {
+                  filterCity();
+                  setClearShow(true);
+                }}
+              >
+                City
+              </button>
             </div>
           </div>
           <div className="sort">
@@ -331,123 +373,110 @@ export const Home = () => {
               <i className="bx bxs-sort-alt"></i> Sort By :
             </p>
             <div>
-              <button onClick={SortByCost}>Cost Per Day</button>
-              <button onClick={SortByRating}>Rating</button>
+              <button
+                onClick={() => {
+                  SortByCost();
+                  setClearShow(true);
+                }}
+              >
+                Cost
+              </button>
+              <button
+                onClick={() => {
+                  SortByRating();
+                  setClearShow(true);
+                }}
+              >
+                Rating
+              </button>
             </div>
           </div>
-          {/* <div>
-            <select name="" id="" onChange={() => {}}>
-              <option
-                onSelect={() => {
-                  //   filterByCost();
-                }}
-                value=""
-              >
-                Sort by Cost Ace
-              </option>
-              <option value="">Sort by Cost Dec</option>
-              <option
-                onSelect={() => {
-                  filterByRating();
-                }}
-                value=""
-              >
-                Sort by Rating Ace
-              </option>
-              <option value="">Sort by Rating Dec</option>
-            </select>
-          </div> */}
         </div>
 
-        <div className="table">
-          <div className="thead">
-            <div className="main-head row">
-              <div className="th sn">S.N.</div>
-              <div className="th">Name</div>
-              <div className="th">City</div>
-              <div className="th">Address</div>
-              <div className="th">Capacity</div>
-              <div className="th">Cost Per Day</div>
-              <div className="th">Verified</div>
-              <div className="th">Rating</div>
-            </div>
-            <div className=""></div>
-          </div>
-          {loading ? (
-            <div className="loading row" style={{ height: `${height}px` }}>
-              <div className="td"></div>
-              <div className="td"></div>
-              <div className="td"></div>
-              <div className="td"></div>
-              <div className="loading_img td">
-                <img src={loading_gif} alt="" />
+        <div className="table_container">
+          <div className="table">
+            <div className="thead">
+              <div className="main-head row">
+                <div className="th sn">S.N.</div>
+                <div className="th">Name</div>
+                <div className="th">City</div>
+                <div className="th">Address</div>
+                <div className="th">Capacity</div>
+                <div className="th">Cost Per Day</div>
+                <div className="th">Verified</div>
+                <div className="th">Rating</div>
               </div>
+              <div className=""></div>
+            </div>
+            {loading ? (
+              <div className="loading row" style={{ height: `${height}px` }}>
+                <div className="td"></div>
+                <div className="td"></div>
+                <div className="td"></div>
+                <div className="td"></div>
+                <div className="loading_img td">
+                  <img src={loading_gif} alt="" />
+                </div>
 
-              <div className="td"></div>
-              <div className="td"></div>
-              <div className="td"></div>
-              <div className="td"></div>
-            </div>
-          ) : (
-            <div className="tbody">
-              {petData.map((e, index) => (
-                <TableRow
-                  key={e._id}
-                  id={e._id}
-                  sn={index + 1}
-                  name={e.name}
-                  city={e.city}
-                  address={e.address}
-                  capacity={e.capacity}
-                  cost_per_day={e.cost_per_day}
-                  verified={e.verified}
-                  rating={e.rating}
-                />
-              ))}
-            </div>
-          )}
+                <div className="td"></div>
+                <div className="td"></div>
+                <div className="td"></div>
+                <div className="td"></div>
+              </div>
+            ) : (
+              <div className="tbody">
+                {petData.map((e, index) => (
+                  <TableRow
+                    key={e._id}
+                    id={e._id}
+                    sn={index + 1}
+                    name={e.name}
+                    city={e.city}
+                    address={e.address}
+                    capacity={e.capacity}
+                    cost_per_day={e.cost_per_day}
+                    verified={e.verified}
+                    rating={e.rating}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="pagination">
-          {page === 1 ? (
-            <button disabled>Prev</button>
-          ) : (
-            <button
-              className={isActive ? "active" : null}
-              onClick={() => {
-                setPage(page - 1);
-                setLoading(true);
-              }}
-            >
-              Prev
-            </button>
-          )}
+          <button
+            className={page === 1 ? "nextPrevBtn" : null}
+            onClick={() => {
+              setPage(page - 1);
+              setLoading(true);
+            }}
+          >
+            Prev
+          </button>
 
           {btn.map((e, index) => (
             <button
-              className={isActive ? "active" : null}
+              className={page - 1 === index ? "active" : null}
               onClick={() => {
                 setPage(index + 1);
+                setActive(true);
                 setLoading(true);
-                console.log(page, loading);
               }}
             >
               {index + 1}
             </button>
           ))}
-          {page === totalPages ? (
-            <button disabled>Next</button>
-          ) : (
-            <button
-              className={isActive ? "active" : null}
-              onClick={() => {
-                setPage(page + 1);
-                setLoading(true);
-              }}
-            >
-              Next
-            </button>
-          )}
+
+          <button
+            className={page === totalPages ? "nextPrevBtn" : null}
+            onClick={() => {
+              setPage(page + 1);
+              setLoading(true);
+            }}
+          >
+            Next
+          </button>
         </div>
       </Div>
 
