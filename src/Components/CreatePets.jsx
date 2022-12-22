@@ -10,6 +10,7 @@ import {
   usersPetsSuccessFun,
 } from "../Redux/UsersPets/action";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../api";
 
 const H2 = styled.h2`
   text-align: center;
@@ -78,7 +79,7 @@ export const CreatePets = () => {
     e.preventDefault();
 
     dispatch(usersPetsLoadingFun());
-    fetch(`https://pet-boarding-server.herokuapp.com/pets/create`, {
+    fetch(`${API_URL}/pets/create`, {
       method: "POST",
       body: JSON.stringify(dataDetails),
       headers: {

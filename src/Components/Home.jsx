@@ -8,6 +8,7 @@ import { Footer } from "./Footer";
 import loading_gif from "../images/loading-gif.png";
 import logo from "../images/logo.png";
 import "./CSS/Style.css";
+import { API_URL } from "../api";
 
 const Container = styled.div`
   width: 100%;
@@ -250,7 +251,7 @@ export const Home = () => {
       dispatch(getPetsData(page, size, setLoading));
       setClearShow(false);
     }
-    fetch(`https://pet-boarding-server.herokuapp.com?search=${e.target.value}`)
+    fetch(`${API_URL}?search=${e.target.value}`)
       .then((res) => res.json())
       .then((res) => {
         setPetData([...res.pets]);

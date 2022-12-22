@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 import cat from "../images/logo.png";
+import { API_URL } from "../api";
 const H1 = styled.h1`
   text-align: center;
   margin-top: 2%;
@@ -75,7 +76,7 @@ export const Register = () => {
   };
 
   const handleSubmit = () => {
-    fetch(`https://pet-boarding-server.herokuapp.com/register`, {
+    fetch(`${API_URL}/register`, {
       method: "POST",
       body: JSON.stringify(userDetails),
       headers: {

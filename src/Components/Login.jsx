@@ -11,6 +11,7 @@ import {
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 import cat from "../images/logo.png";
+import { API_URL } from "../api";
 
 const H1 = styled.h1`
   text-align: center;
@@ -77,7 +78,7 @@ export const Login = () => {
     };
 
     dispatch(loginLoading());
-    fetch(`https://pet-boarding-server.herokuapp.com/login`, {
+    fetch(`${API_URL}/login`, {
       method: "POST",
       body: JSON.stringify(userDetails),
       headers: {

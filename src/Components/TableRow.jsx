@@ -1,17 +1,15 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FaTrashAlt } from "react-icons/fa";
-import { useReducer, useState } from "react";
+import {  useState } from "react";
 import Modal from "./Modal";
 import Modal2 from "./Modal2";
 import {
   getPetsData,
-  petsDeleteFun,
-  petsErrorFun,
+    petsErrorFun,
   petsLoadingFun,
-  petsSuccessFun,
 } from "../Redux/Pets/action";
 import { useDispatch, useSelector } from "react-redux";
+import { API_URL } from "../api";
 
 const Div = styled.div`
   display: flex;
@@ -53,9 +51,8 @@ export const TableRow = ({
   // Delete and Edit network request
   const deleteData = () => {
     dispatch(petsLoadingFun());
-    fetch(`https://pet-boarding-server.herokuapp.com/listing/delete/${id}`, {
+    fetch(`${API_URL}/listing/delete/${id}`, {
       method: "DELETE",
-      // body: JSON.stringify(dataDetails),
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
@@ -103,8 +100,6 @@ export const TableRow = ({
           <i class="bx bx-chevrons-right"></i>
         </div>
       )}
-      {/* <button onClick={() => setIsOpen(true)}>Open Modal</button>
-      {isOpen && <Modal setIsOpen={setIsOpen} />} */}
     </Div>
   );
 };

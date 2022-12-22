@@ -12,6 +12,7 @@ import {
 } from "../Redux/Pets/action";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../api";
 
 const Form = styled.form`
   display: flex;
@@ -94,7 +95,7 @@ const Modal2 = ({ setIsOpen2, id }) => {
     e.preventDefault();
 
     dispatch(petsLoadingFun());
-    fetch(`https://pet-boarding-server.herokuapp.com/listing/update/${id}`, {
+    fetch(`${API_URL}/listing/update/${id}`, {
       method: "PATCH",
       body: JSON.stringify(dataDetails),
       headers: {

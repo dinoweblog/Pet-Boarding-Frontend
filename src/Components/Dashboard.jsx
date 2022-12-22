@@ -6,6 +6,7 @@ import { Footer } from "./Footer";
 import { allGetUsersPetsData } from "../Redux/UsersPets/action";
 import { TableRowAdmin } from "./TableRowAdmin";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../api";
 
 const Container = styled.div`
   width: 100%;
@@ -133,7 +134,7 @@ export const Dashboard = () => {
 
   const handleApprove = (id) => {
     console.log(id);
-    fetch(`https://pet-boarding-server.herokuapp.com/approval/${id}`, {
+    fetch(`${API_URL}/approval/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ approval_status: "Approved" }),
       headers: {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
+import { API_URL } from "../api";
 import { loginAuthenticated } from "../Redux/Login/action";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
@@ -67,7 +68,7 @@ export const ListingPage = () => {
     findData();
   }, []);
   const findData = () => {
-    fetch(`https://pet-boarding-server.herokuapp.com/listing/${id}`)
+    fetch(`${API_URL}/listing/${id}`)
       .then((res) => res.json())
       .then((res) => {
         setData({ ...res.pet });

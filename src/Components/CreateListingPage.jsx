@@ -9,6 +9,7 @@ import {
 } from "../Redux/Pets/action";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
+import { API_URL } from "../api";
 
 const H2 = styled.h2`
   text-align: center;
@@ -80,27 +81,13 @@ export const CreateListingPage = () => {
     cost_per_day,
     verified,
     rating,
-
-    // summary,
-    // watch_time,
-    // pet_types,
-    // pet_types,
-    // pet_size,
-    // supervision_level,
-    // live_place,
-    // sleep_place,
-    // no_of_potty_breaks,
-    // no_of_walks,
-    // my_home,
-    // outdoor_area_size,
-    // emergency_transport,
   };
 
   const handleForm = (e) => {
     e.preventDefault();
 
     dispatch(petsLoadingFun());
-    fetch(`https://pet-boarding-server.herokuapp.com/listing/create`, {
+    fetch(`${API_URL}/listing/create`, {
       method: "POST",
       body: JSON.stringify(dataDetails),
       headers: {
@@ -199,117 +186,6 @@ export const CreateListingPage = () => {
               setRating(e.target.value);
             }}
           />
-
-          {/* <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="10"
-            value={summary}
-            placeholder="Summary..."
-            onChange={(e) => {
-              setSummary(e.target.value);
-            }}
-          ></textarea>
-          <input
-            type="number"
-            placeholder="Watch Time"
-            name=""
-            value={watch_time}
-            onChange={(e) => {
-              setWatchTime(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Pet Types"
-            name=""
-            value={pet_types}
-            onChange={(e) => {
-              setPetTypes(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Pet Size"
-            name=""
-            value={pet_size}
-            onChange={(e) => {
-              setPetSize(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Supervision level"
-            name=""
-            value={supervision_level}
-            onChange={(e) => {
-              setSupervisionLevel(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Live Place"
-            name=""
-            value={live_place}
-            onChange={(e) => {
-              setLivePlace(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Sleep Place"
-            name=""
-            value={sleep_place}
-            onChange={(e) => {
-              setSleepPlace(e.target.value);
-            }}
-          />
-          <input
-            type="number"
-            placeholder="no of potty breaks"
-            name=""
-            value={no_of_potty_breaks}
-            onChange={(e) => {
-              setNo_of_potty_breaks(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="no of walks"
-            name=""
-            value={no_of_walks}
-            onChange={(e) => {
-              setNo_of_walks(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="My home"
-            name=""
-            value={my_home}
-            onChange={(e) => {
-              setMyHome(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="outdoor area size"
-            name=""
-            value={outdoor_area_size}
-            onChange={(e) => {
-              setOutdoor_area_size(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="emergency transport"
-            name=""
-            value={emergency_transport}
-            onChange={(e) => {
-              setEmergencyTransport(e.target.value);
-            }}
-          /> */}
           <input type="submit" />
         </form>
       </Div>
