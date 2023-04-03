@@ -5,6 +5,10 @@ import { allGetUsersPetsData } from "../Redux/UsersPets/action";
 import { TableRowAdmin } from "./TableRowAdmin";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../api";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../notification/Notification";
 
 const Container = styled.div`
   width: 100%;
@@ -100,11 +104,9 @@ export const Dashboard = () => {
   let { AllUsersPets } = useSelector((state) => state.usersPets);
   const [petData, setPetData] = useState([...AllUsersPets]);
   const [petDataApprove, setPetDataApprove] = useState([]);
-  const [count, setCount] = useState(0);
-  const navigate = useNavigate();
-  const { token, isAuthenticated, roles, user } = useSelector(
-    (state) => state.login
-  );
+  const [petDataCancel, setPetDataCancel] = useState([]);
+  const [loading, setLoading] = useState();
+  const { token, user } = useSelector((state) => state.login);
 
   useEffect(() => {
     dispatch(allGetUsersPetsData());
@@ -114,9 +116,8 @@ export const Dashboard = () => {
     setPetData([...AllUsersPets]);
     filter();
     filter2();
+    handleCancel();
   }, [AllUsersPets, dispatch]);
-
-  useEffect(() => {}, [count]);
 
   const filter = () => {
     const f = AllUsersPets.filter((el) => el.approval_status === "Pending");
@@ -130,18 +131,34 @@ export const Dashboard = () => {
     setPetDataApprove([...f]);
   };
 
-  const handleApprove = (id) => {
-    console.log(id);
-    fetch(`${API_URL}/approval/${id}`, {
+  const handleCancel = () => {
+    const f = AllUsersPets.filter((el) => el.approval_status === "Canceled");
+
+    setPetDataCancel([...f]);
+  };
+
+  const handleApprove = (id, status) => {
+    setLoading(id);
+    fetch(`${API_URL}/status/${id}`, {
       method: "PATCH",
-      body: JSON.stringify({ approval_status: "Approved" }),
+      body: JSON.stringify({ approval_status: status }),
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-    }).then((res) => {
-      dispatch(allGetUsersPetsData());
-    });
+    })
+      .then((res) => {
+        if (res.message) {
+          showErrorNotification(res.message);
+        } else {
+          dispatch(allGetUsersPetsData());
+          showSuccessNotification("Successfully updated");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        showErrorNotification(err.message);
+      });
   };
 
   return (
@@ -173,23 +190,14 @@ export const Dashboard = () => {
             {petData.length === 0 ? (
               <h4>Empty!</h4>
             ) : (
-              petData.map((e, index) => (
+              petData.map((item, index) => (
                 <TableRowAdmin
-                  key={e._id}
-                  id={e._id}
+                  key={item._id}
                   sn={index + 1}
-                  name={e.name}
-                  city={e.city}
-                  address={e.address}
-                  mobile={e.mobile}
-                  pet_type={e.pet_type}
-                  weight={e.weight}
-                  no_of_pets={e.no_of_pets}
-                  no_of_days={e.no_of_days}
-                  approval_status={e.approval_status}
-                  status="Approve"
-                  button="button"
+                  item={item}
                   handleApprove={handleApprove}
+                  button="button"
+                  loading={loading}
                 />
               ))
             )}
@@ -212,22 +220,21 @@ export const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {petDataApprove.map((e, index) => (
+            {petDataApprove.map((item, index) => (
               <TableRowAdmin
-                key={e._id}
-                id={e._id}
+                key={item._id}
                 sn={index + 1}
-                name={e.name}
-                city={e.city}
-                address={e.address}
-                mobile={e.mobile}
-                pet_type={e.pet_type}
-                weight={e.weight}
-                no_of_pets={e.no_of_pets}
-                no_of_days={e.no_of_days}
-                approval_status={e.approval_status}
-                status="Approved"
-                button="p"
+                item={item}
+                handleApprove={handleApprove}
+              />
+            ))}
+          </tbody>
+          <tbody>
+            {petDataCancel.map((item, index) => (
+              <TableRowAdmin
+                key={item._id}
+                sn={index + 1}
+                item={item}
                 handleApprove={handleApprove}
               />
             ))}
