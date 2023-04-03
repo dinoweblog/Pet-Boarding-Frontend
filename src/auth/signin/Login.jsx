@@ -1,13 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {
-  loginAuthenticated,
-  loginError,
-  loginLoading,
-  loginSuccess,
-} from "../../Redux/Login/action";
+import { loginAuthenticated, loginSuccess } from "../../Redux/Login/action";
 import { API_URL } from "../../api";
 import {
   showErrorNotification,
@@ -65,6 +60,7 @@ const Div = styled.div`
 export const Login = () => {
   const [email, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = () => {
@@ -72,8 +68,7 @@ export const Login = () => {
       email,
       password,
     };
-
-    dispatch(loginLoading());
+    setLoading(true);
     fetch(`${API_URL}/login`, {
       method: "POST",
       body: JSON.stringify(userDetails),
@@ -84,6 +79,7 @@ export const Login = () => {
       .then((res) => res.json())
 
       .then((res) => {
+        setLoading(false);
         if (res.message) {
           showErrorNotification(`${res.message}`);
         } else {
@@ -109,6 +105,7 @@ export const Login = () => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
         showErrorNotification(err.message);
       });
   };
@@ -136,7 +133,7 @@ export const Login = () => {
             handleSubmit();
           }}
         >
-          Login
+          {loading ? `Login...` : `Login`}
         </button>
       </Div>
     </MainDiv>
