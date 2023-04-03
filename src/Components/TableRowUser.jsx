@@ -27,7 +27,14 @@ export const TableRowUser = ({
       <td>{weight}</td>
       <td>{no_of_pets}</td>
       <td>{no_of_days}</td>
-      <td style={{ color: color, fontWeight: 600 }}>{approval_status}</td>
+      <td
+        style={{
+          color: approval_status === "Canceled" ? "red" : color,
+          fontWeight: 600,
+        }}
+      >
+        {approval_status}
+      </td>
     </Tr>
   );
 };
