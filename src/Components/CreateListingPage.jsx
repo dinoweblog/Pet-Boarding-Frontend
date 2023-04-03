@@ -28,13 +28,13 @@ const Div = styled.div`
 
     input,
     select {
-      height: 33px;
+      height: 40px;
       padding-left: 15px;
       outline: none;
       border: 1px solid #dddddd;
     }
     input[type="submit"] {
-      height: 38px;
+      height: 45px;
       border: none;
       background-color: #a85cf9;
       color: white;
@@ -56,14 +56,14 @@ export const CreateListingPage = () => {
     verified: "",
     rating: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.login);
 
   const dispatch = useDispatch();
 
   const handleForm = (e) => {
     e.preventDefault();
-
+    setLoading(true);
     dispatch(petsLoadingFun());
     fetch(`${API_URL}/listing/create`, {
       method: "POST",
@@ -74,11 +74,13 @@ export const CreateListingPage = () => {
       },
     })
       .then((res) => res.json())
-      .then((res) => {
+      .then(() => {
+        setLoading(false);
         showSuccessNotification("Successfully Added");
         emptyForm();
       })
       .catch((error) => {
+        setLoading(false);
         showErrorNotification(error.message);
       });
   };
@@ -109,7 +111,7 @@ export const CreateListingPage = () => {
           <input
             required
             type="text"
-            placeholder="Name"
+            placeholder="Pet Name"
             name="name"
             value={formData.name}
           />
@@ -154,7 +156,7 @@ export const CreateListingPage = () => {
             name="rating"
             value={formData.rating}
           />
-          <input type="submit" />
+          <input type="submit" value={loading ? `Submiting...` : `Submit`} />
         </form>
       </Div>
     </div>

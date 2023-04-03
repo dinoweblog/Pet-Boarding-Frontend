@@ -27,13 +27,13 @@ const Div = styled.div`
     gap: 20px;
 
     input {
-      height: 33px;
+      height: 40px;
       padding-left: 15px;
       outline: none;
       border: 1px solid #dddddd;
     }
     input[type="submit"] {
-      height: 38px;
+      height: 45px;
       border: none;
       background-color: #a85cf9;
       color: white;
@@ -47,6 +47,7 @@ const Div = styled.div`
 
 export const CreatePets = () => {
   const { token, userId } = useSelector((state) => state.login);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     city: "",
@@ -63,7 +64,7 @@ export const CreatePets = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setLoading(true);
     dispatch(usersPetsLoadingFun());
     fetch(`${API_URL}/pets/create`, {
       method: "POST",
@@ -75,10 +76,12 @@ export const CreatePets = () => {
     })
       .then((res) => res.json())
       .then((res) => {
+        setLoading(false);
         showSuccessNotification("Successfully Added");
         emptyForm();
       })
       .catch((error) => {
+        setLoading(false);
         showErrorNotification(error.message);
       });
   };
@@ -146,7 +149,7 @@ export const CreatePets = () => {
           <input
             required
             type="number"
-            placeholder="Pet Size"
+            placeholder="Weight in kg"
             name="weight"
             value={formData.weight}
           />
@@ -166,7 +169,7 @@ export const CreatePets = () => {
             value={formData.no_of_days}
           />
 
-          <input type="submit" />
+          <input type="submit" value={loading ? `Submiting...` : `Submit`} />
         </form>
       </Div>
     </div>
