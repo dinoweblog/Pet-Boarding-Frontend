@@ -2,14 +2,12 @@ import { useState } from "react";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  petsErrorFun,
-  petsLoadingFun,
-  petsSuccessFun,
-} from "../Redux/Pets/action";
-import { Navbar } from "./Navbar";
-import { Footer } from "./Footer";
+import { petsLoadingFun } from "../Redux/Pets/action";
 import { API_URL } from "../api";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../notification/Notification";
 
 const H2 = styled.h2`
   text-align: center;
@@ -49,39 +47,19 @@ const Div = styled.div`
 `;
 
 export const CreateListingPage = () => {
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [address, setAddress] = useState("");
-  const [capacity, setCapacity] = useState("");
-  const [cost_per_day, setCostPerCity] = useState("");
-  const [verified, setVerified] = useState("");
-  const [rating, setRating] = useState("");
-  const [summary, setSummary] = useState("");
-  const [watch_time, setWatchTime] = useState("");
-  const [pet_types, setPetTypes] = useState("");
-  const [pet_size, setPetSize] = useState("");
-  const [supervision_level, setSupervisionLevel] = useState("");
-  const [live_place, setLivePlace] = useState("");
-  const [sleep_place, setSleepPlace] = useState("");
-  const [no_of_potty_breaks, setNo_of_potty_breaks] = useState("");
-  const [no_of_walks, setNo_of_walks] = useState("");
-  const [my_home, setMyHome] = useState("");
-  const [outdoor_area_size, setOutdoor_area_size] = useState("");
-  const [emergency_transport, setEmergencyTransport] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    city: "",
+    address: "",
+    capacity: "",
+    cost_per_day: "",
+    verified: "",
+    rating: "",
+  });
 
   const { token } = useSelector((state) => state.login);
 
   const dispatch = useDispatch();
-
-  const dataDetails = {
-    name,
-    city,
-    address,
-    capacity,
-    cost_per_day,
-    verified,
-    rating,
-  };
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -89,7 +67,7 @@ export const CreateListingPage = () => {
     dispatch(petsLoadingFun());
     fetch(`${API_URL}/listing/create`, {
       method: "POST",
-      body: JSON.stringify(dataDetails),
+      body: JSON.stringify(formData),
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
@@ -97,80 +75,73 @@ export const CreateListingPage = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        dispatch(petsSuccessFun(res));
+        showSuccessNotification("Successfully Added");
+        emptyForm();
       })
-      .catch((error) => dispatch(petsErrorFun()));
+      .catch((error) => {
+        showErrorNotification(error.message);
+      });
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const emptyForm = () => {
+    setFormData({
+      name: "",
+      city: "",
+      address: "",
+      capacity: "",
+      cost_per_day: "",
+      verified: "",
+      rating: "",
+    });
   };
 
   return (
     <div>
-      <Navbar />
       <H2>Create Listing</H2>
       <Div>
-        <form
-          onSubmit={(e) => {
-            handleForm(e);
-          }}
-          className="form"
-        >
+        <form onSubmit={handleForm} onChange={handleChange} className="form">
           <input
             required
             type="text"
             placeholder="Name"
-            name=""
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
+            name="name"
+            value={formData.name}
           />
           <input
             required
             type="text"
             placeholder="City"
-            name="City"
-            value={city}
-            onChange={(e) => {
-              setCity(e.target.value);
-            }}
+            name="city"
+            value={formData.city}
           />
           <input
             required
             type="text"
             placeholder="Address"
-            name=""
-            value={address}
-            onChange={(e) => {
-              setAddress(e.target.value);
-            }}
+            name="address"
+            value={formData.address}
           />
           <input
             required
             type="number"
             placeholder="Capacity"
-            name=""
-            value={capacity}
-            onChange={(e) => {
-              setCapacity(e.target.value);
-            }}
+            name="capacity"
+            value={formData.capacity}
           />
           <input
             required
             type="number"
             placeholder="Cost per day"
-            name=""
-            value={cost_per_day}
-            onChange={(e) => {
-              setCostPerCity(e.target.value);
-            }}
+            name="cost_per_day"
+            value={formData.cost_per_day}
           />
-          <select
-            required
-            name=""
-            id=""
-            onChange={(e) => {
-              setVerified(e.target.value);
-            }}
-          >
+          <select required name="verified">
             <option value="">Verified</option>
             <option value="yes">yes</option>
             <option value="no">no</option>
@@ -180,16 +151,12 @@ export const CreateListingPage = () => {
             required
             type="number"
             placeholder="Rating"
-            name=""
-            value={rating}
-            onChange={(e) => {
-              setRating(e.target.value);
-            }}
+            name="rating"
+            value={formData.rating}
           />
           <input type="submit" />
         </form>
       </Div>
-      <Footer />
     </div>
   );
 };

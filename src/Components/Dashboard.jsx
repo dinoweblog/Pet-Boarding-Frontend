@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Navbar } from "./Navbar";
-import { Footer } from "./Footer";
 import { allGetUsersPetsData } from "../Redux/UsersPets/action";
 import { TableRowAdmin } from "./TableRowAdmin";
 import { useNavigate } from "react-router-dom";
@@ -141,26 +139,19 @@ export const Dashboard = () => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-    })
-      .then((res) => {
-        filter();
-        filter2();
-      })
-      .then(() => {
-        navigate("/users/dashboard");
-      });
+    }).then((res) => {
+      dispatch(allGetUsersPetsData());
+    });
   };
 
   return (
     <Container>
-      <Navbar />
       <Div>
         <div className="profile">
           <h3>
             Welcome <span>{user.name}</span>{" "}
           </h3>
           <p>Email : {user.email}</p>
-          <p>Mobile : {user.mobile}</p>
         </div>
 
         <h2>Approval Request</h2>
@@ -243,7 +234,6 @@ export const Dashboard = () => {
           </tbody>
         </table>
       </Div>
-      <Footer />
     </Container>
   );
 };

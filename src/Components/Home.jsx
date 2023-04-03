@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPetsData } from "../Redux/Pets/action";
+import { getPetsData, petsSuccessFun } from "../Redux/Pets/action";
 import { TableRow } from "./TableRow";
 import styled from "styled-components";
-import { Navbar } from "./Navbar";
-import { Footer } from "./Footer";
-import loading_gif from "../images/loading-gif.png";
-import logo from "../images/logo.png";
 import "./CSS/Style.css";
 import { API_URL } from "../api";
+import { Box } from "@mui/material";
+import Modal from "./Modal";
+import Modal2 from "./Modal2";
 
 const Container = styled.div`
   width: 100%;
@@ -23,21 +22,12 @@ const Container = styled.div`
     box-sizing: border-box;
     .quote_icon {
       font-size: 40px;
-      /* position: absolute; */
     }
     .bxs-quote-right {
       margin-top: 10px;
       position: absolute;
     }
   }
-`;
-
-const MainDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
 `;
 
 const Div = styled.div`
@@ -215,17 +205,18 @@ const Div = styled.div`
 `;
 
 export const Home = () => {
-  const [city, setCity] = useState();
+  const [city, setCity] = useState("");
   const [verify, setVerify] = useState("yes");
   const [costCheck, setCostCheck] = useState(true);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(5);
-  const [height, setHeight] = useState(315);
   const [ratingCheck, setRatingCheck] = useState(true);
   const [alpha, setAlpha] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [isActive, setActive] = useState(false);
   const [clearShow, setClearShow] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [itemId, setItenId] = useState();
+  const size = 5;
 
   const dispatch = useDispatch();
 
@@ -245,16 +236,27 @@ export const Home = () => {
     setBtn(new Array(totalPages).fill("btn"));
   }, [totalPages, dispatch]);
 
-  const searchCity = (e) => {
+  useEffect(() => {
+    const getData = setTimeout(handleApiClls, 2000);
+
+    return () => clearTimeout(getData);
+  }, [city]);
+
+  const handleChange = (e) => {
     setLoading(true);
-    if (city === "") {
-      dispatch(getPetsData(page, size, setLoading));
-      setClearShow(false);
-    }
-    fetch(`${API_URL}?search=${e.target.value}`)
+    setCity(e.target.value);
+    setClearShow(true);
+  };
+
+  const handleApiClls = () => {
+    fetch(`${API_URL}?search=${city}`)
       .then((res) => res.json())
       .then((res) => {
         setPetData([...res.pets]);
+        console.log(res);
+        dispatch(
+          petsSuccessFun({ pets: res.pets, totalPages: res.totalPages })
+        );
         setLoading(false);
       })
       .catch((error) => console.log(error));
@@ -308,12 +310,15 @@ export const Home = () => {
     setCity("");
   };
 
+  const getId = (id) => {
+    setItenId(id);
+  };
+
   return (
     <Container>
-      <Navbar />
       <Div id="content_container">
         <div className="dog_img">
-          <img src={logo} alt="" />
+          <img src="logo.png" alt="" />
         </div>
         <h2 className="top-text">
           Pet Boarding Locaton, Plans and All Details.
@@ -339,11 +344,7 @@ export const Home = () => {
               id=""
               value={city}
               placeholder="city..."
-              onChange={(e) => {
-                setCity(e.target.value);
-                searchCity(e);
-                setClearShow(true);
-              }}
+              onChange={handleChange}
             />
           </div>
           <div className="filter">
@@ -409,39 +410,39 @@ export const Home = () => {
               </div>
               <div className=""></div>
             </div>
-            {loading ? (
-              <div className="loading row" style={{ height: `${height}px` }}>
-                <div className="td"></div>
-                <div className="td"></div>
-                <div className="td"></div>
-                <div className="td"></div>
-                <div className="loading_img td">
-                  <img src={loading_gif} alt="" />
-                </div>
 
-                <div className="td"></div>
-                <div className="td"></div>
-                <div className="td"></div>
-                <div className="td"></div>
-              </div>
-            ) : (
-              <div className="tbody">
-                {petData.map((e, index) => (
-                  <TableRow
-                    key={e._id}
-                    id={e._id}
-                    sn={index + 1}
-                    name={e.name}
-                    city={e.city}
-                    address={e.address}
-                    capacity={e.capacity}
-                    cost_per_day={e.cost_per_day}
-                    verified={e.verified}
-                    rating={e.rating}
-                  />
-                ))}
-              </div>
-            )}
+            <Box className="tbody" sx={{ position: "relative" }}>
+              {!loading ? (
+                petData.length === 0 ? (
+                  <div>Not Found!</div>
+                ) : (
+                  petData.map((e, index) => (
+                    <TableRow
+                      key={e._id}
+                      id={e._id}
+                      sn={index + 1}
+                      name={e.name}
+                      city={e.city}
+                      address={e.address}
+                      capacity={e.capacity}
+                      cost_per_day={e.cost_per_day}
+                      verified={e.verified}
+                      rating={e.rating}
+                      page={page}
+                      setIsOpen={setIsOpen}
+                      setIsOpen2={setIsOpen2}
+                      getId={getId}
+                    />
+                  ))
+                )
+              ) : (
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <div className="loading_img td">
+                    <img src="assets/loading-gif.png" alt="" />
+                  </div>
+                </Box>
+              )}
+            </Box>
           </div>
         </div>
 
@@ -461,7 +462,6 @@ export const Home = () => {
               className={page - 1 === index ? "active" : null}
               onClick={() => {
                 setPage(index + 1);
-                setActive(true);
                 setLoading(true);
               }}
             >
@@ -493,8 +493,8 @@ export const Home = () => {
         every culture and society, pet keeping apparently satisfies a deep,
         universal human need. <i className="bx bxs-quote-right quote_icon"></i>
       </div>
-
-      <Footer />
+      {isOpen && <Modal id={itemId} setIsOpen={setIsOpen} page={page} />}
+      {isOpen2 && <Modal2 id={itemId} setIsOpen2={setIsOpen2} page={page} />}
     </Container>
   );
 };
