@@ -58,6 +58,7 @@ const Form = styled.form`
 `;
 
 const Modal2 = ({ setIsOpen2, id, page }) => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     city: "",
@@ -91,6 +92,7 @@ const Modal2 = ({ setIsOpen2, id, page }) => {
     e.preventDefault();
 
     dispatch(petsLoadingFun());
+    setLoading(true);
     fetch(`${API_URL}/listing/update/${id}`, {
       method: "PATCH",
       body: JSON.stringify(formData),
@@ -101,11 +103,13 @@ const Modal2 = ({ setIsOpen2, id, page }) => {
     })
       .then((res) => res.json())
       .then(() => {
+        setLoading(false);
         dispatch(getPetsData(page));
         setIsOpen2(false);
         showSuccessNotification("Successfully Updated");
       })
       .catch((error) => {
+        setLoading(false);
         dispatch(petsErrorFun());
         showErrorNotification(error.message);
         console.log(error);
@@ -190,7 +194,10 @@ const Modal2 = ({ setIsOpen2, id, page }) => {
                 name="rating"
                 value={formData.rating}
               />
-              <input type="submit" />
+              <input
+                type="submit"
+                value={loading ? `Submiting...` : `Submit`}
+              />
               <button onClick={() => setIsOpen2(false)}>Cancel</button>
             </Form>
           </div>

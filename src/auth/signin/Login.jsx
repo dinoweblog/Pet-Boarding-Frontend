@@ -40,13 +40,13 @@ const Div = styled.div`
   margin-top: 30px;
   input,
   select {
-    height: 33px;
+    height: 40px;
     padding-left: 15px;
     outline: none;
     border: 1px solid #dddddd;
   }
   button {
-    height: 38px;
+    height: 45px;
     border: none;
     background-color: #a85cf9;
     color: white;
