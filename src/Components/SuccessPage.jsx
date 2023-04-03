@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import { Footer } from "./Footer";
-import { Navbar } from "./Navbar";
 
 const Div = styled.div`
   width: 80%;
@@ -21,7 +19,6 @@ const Div = styled.div`
 export const Successfull = () => {
   return (
     <>
-      <Navbar />
       <Div>
         <div>
           <img
@@ -32,7 +29,6 @@ export const Successfull = () => {
         <h2>Successfully Added</h2>
         <p>Thank you for you choose me!</p>
       </Div>
-      <Footer />
     </>
   );
 };

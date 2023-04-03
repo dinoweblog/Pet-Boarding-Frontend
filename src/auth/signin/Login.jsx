@@ -7,11 +7,12 @@ import {
   loginError,
   loginLoading,
   loginSuccess,
-} from "../Redux/Login/action";
-import { Footer } from "./Footer";
-import { Navbar } from "./Navbar";
-import cat from "../images/logo.png";
-import { API_URL } from "../api";
+} from "../../Redux/Login/action";
+import { API_URL } from "../../api";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../../notification/Notification";
 
 const H1 = styled.h1`
   text-align: center;
@@ -20,11 +21,6 @@ const H1 = styled.h1`
 const MainDiv = styled.div`
   .footer {
     margin-top: 25%;
-  }
-`;
-const Nav = styled.div`
-  .nav {
-    border-bottom: 1px solid gray;
   }
 `;
 
@@ -44,7 +40,7 @@ const Div = styled.div`
   gap: 25px;
   background-color: white;
   box-sizing: border-box;
-  padding: 2%;
+  padding: 40px;
   border-radius: 8px;
   margin-top: 30px;
   input,
@@ -86,35 +82,41 @@ export const Login = () => {
       },
     })
       .then((res) => res.json())
+
       .then((res) => {
-        dispatch(
-          loginSuccess({
-            token: res.token,
-            roles: res.user.roles,
-            user: res.user,
-            userId: res.user._id,
-          })
-        );
-        dispatch(loginAuthenticated("true"));
-        navigate("/");
-        if (res.token != undefined) {
+        if (res.message) {
+          showErrorNotification(`${res.message}`);
+        } else {
+          showSuccessNotification(`Welcome ${res.user.name}`);
+          dispatch(
+            loginSuccess({
+              token: res.token,
+              roles: res.user.roles[0],
+              user: res.user,
+              userId: res.user._id,
+            })
+          );
           dispatch(loginAuthenticated("true"));
           navigate("/");
-        } else {
-          dispatch(loginAuthenticated("false"));
-          navigate("/");
+          if (res.token != undefined) {
+            dispatch(loginAuthenticated("true"));
+            navigate("/");
+          } else {
+            dispatch(loginAuthenticated("false"));
+            navigate("/");
+          }
         }
       })
-      .catch((error) => dispatch(loginError()));
+      .catch((err) => {
+        console.log(err);
+        showErrorNotification(err.message);
+      });
   };
 
   return (
     <MainDiv>
-      <Nav>
-        <Navbar />
-      </Nav>
       <H1>Login</H1>
-      <Img className="dog_img" src={cat} alt="" />
+      <Img className="dog_img" src="logo.png" alt="" />
       <Div>
         <input
           type="text"
@@ -137,9 +139,6 @@ export const Login = () => {
           Login
         </button>
       </Div>
-      <div className="footer">
-        <Footer />
-      </div>
     </MainDiv>
   );
 };

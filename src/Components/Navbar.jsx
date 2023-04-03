@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getLogout } from "../Redux/Login/action";
-import logo from "../images/logo.png";
 
 const Div = styled.div`
   padding: 8px 10%;
@@ -51,7 +50,7 @@ export const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  if (roles[0] === "admin")
+  if (roles === "admin")
     return (
       <Div>
         <div
@@ -60,7 +59,7 @@ export const Navbar = () => {
             navigate("/");
           }}
         >
-          <img src={logo} alt="" />
+          <img style={{ width: "30px" }} src="logo.png" alt="" />
           <h3>PetCare</h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}
@@ -81,7 +80,7 @@ export const Navbar = () => {
         </div>
       </Div>
     );
-  else if (roles[0] === "users")
+  else if (roles === "user")
     return (
       <Div>
         <div
@@ -90,7 +89,7 @@ export const Navbar = () => {
             navigate("/");
           }}
         >
-          <img src={logo} alt="" />
+          <img src="./logo.png" alt="" />
           <h3>PetCare</h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}
@@ -120,7 +119,7 @@ export const Navbar = () => {
             navigate("/");
           }}
         >
-          <img src={logo} alt="" />
+          <img src="logo.png" alt="" />
           <h3>PetCare</h3>
         </div>
         {/* <Link to={"/"}>Home</Link> */}

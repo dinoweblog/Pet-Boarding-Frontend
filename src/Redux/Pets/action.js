@@ -25,9 +25,11 @@ export const petsErrorFun = () => ({
 
 export const getPetsData = (page, size, setLoading) => (dispatch) => {
   dispatch(petsLoadingFun());
+  console.log("page", page);
   fetch(`${API_URL}?page=${page}&size=${size}`)
     .then((res) => res.json())
     .then((res) => {
+      console.log(res);
       dispatch(petsSuccessFun({ pets: res.pets, totalPages: res.totalPages }));
       setLoading(false);
     })

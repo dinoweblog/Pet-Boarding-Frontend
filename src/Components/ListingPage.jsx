@@ -4,8 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { API_URL } from "../api";
 import { loginAuthenticated } from "../Redux/Login/action";
-import { Footer } from "./Footer";
-import { Navbar } from "./Navbar";
 
 const Div = styled.div`
   .background {
@@ -82,7 +80,6 @@ export const ListingPage = () => {
 
   return (
     <Div>
-      <Navbar />
       <div className="background"></div>
       <div className="items">
         <div className="details">
@@ -119,7 +116,6 @@ export const ListingPage = () => {
           <button onClick={handleBook}>Book Now</button>
         </div>
       </div>
-      <Footer />
     </Div>
   );
 };

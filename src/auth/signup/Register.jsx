@@ -1,19 +1,14 @@
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Footer } from "./Footer";
-import { Navbar } from "./Navbar";
-import cat from "../images/logo.png";
-import { API_URL } from "../api";
+import { API_URL } from "../../api";
+import {
+  showErrorNotification,
+  showSuccessNotification,
+} from "../../notification/Notification";
 const H1 = styled.h1`
   text-align: center;
   margin-top: 2%;
-`;
-
-const Nav = styled.div`
-  .nav {
-    border-bottom: 1px solid gray;
-  }
 `;
 
 const Img = styled.img`
@@ -32,7 +27,7 @@ const Div = styled.div`
   gap: 25px;
   background-color: white;
   box-sizing: border-box;
-  padding: 2%;
+  padding: 40px;
   border-radius: 8px;
   margin-top: 30px;
   margin-bottom: 8%;
@@ -59,10 +54,6 @@ export const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [gender, setGender] = useState("");
-  const [roles, setRoles] = useState([]);
-  const [e, setError] = useState("");
 
   const Navigate = useNavigate();
 
@@ -70,9 +61,6 @@ export const Register = () => {
     name,
     email,
     password,
-    mobile,
-    gender,
-    roles,
   };
 
   const handleSubmit = () => {
@@ -84,20 +72,25 @@ export const Register = () => {
       },
     })
       .then((res) => res.json())
-      // .then((res) => )
+      .then((res) => {
+        if (res.message) {
+          showErrorNotification(`${res.message}`);
+        } else {
+          showSuccessNotification("Successfully Signup");
+          Navigate("/login");
+        }
+      })
       .catch((err) => {
         console.log(err);
+        showErrorNotification(err.message);
       });
   };
 
   return (
     <>
-      <Nav>
-        <Navbar />
-      </Nav>
       <H1>Register</H1>
 
-      <Img className="dog_img" src={cat} alt="" />
+      <Img className="dog_img" src="logo.png" alt="" />
 
       <Div>
         <input
@@ -121,50 +114,10 @@ export const Register = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input
-          required
-          type="number"
-          placeholder="Enter Mobile"
-          value={mobile}
-          onChange={(e) => setMobile(e.target.value)}
-        />
 
-        <select
-          required
-          name=""
-          id=""
-          onChange={(e) => {
-            setGender(e.target.value);
-          }}
-        >
-          <option value="">Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-
-        <select
-          required
-          name=""
-          id=""
-          onChange={(e) => {
-            setRoles([e.target.value]);
-          }}
-        >
-          <option value="">Roles</option>
-          <option value="users">users</option>
-          <option value="admin">admin</option>
-        </select>
-
-        <button
-          onClick={() => {
-            handleSubmit();
-            Navigate("/login");
-          }}
-        >
-          Register
-        </button>
+        <button onClick={handleSubmit}>Register</button>
+        <Link to="/signup/admin">Create Admin Account</Link>
       </Div>
-      <Footer />
     </>
   );
 };

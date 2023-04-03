@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import {  useState } from "react";
-import Modal from "./Modal";
-import Modal2 from "./Modal2";
-import {
-  getPetsData,
-    petsErrorFun,
-  petsLoadingFun,
-} from "../Redux/Pets/action";
-import { useDispatch, useSelector } from "react-redux";
-import { API_URL } from "../api";
+import { useSelector } from "react-redux";
 
 const Div = styled.div`
   display: flex;
@@ -26,10 +17,6 @@ const Div = styled.div`
   }
 `;
 
-const Span = styled.span`
-  position: absolute;
-`;
-
 export const TableRow = ({
   id,
   sn,
@@ -40,30 +27,12 @@ export const TableRow = ({
   cost_per_day,
   verified,
   rating,
+  getId,
+  setIsOpen,
+  setIsOpen2,
 }) => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpen2, setIsOpen2] = useState(false);
-  const { pets } = useSelector((state) => state.pets);
-  const { token, isAuthenticated, roles } = useSelector((state) => state.login);
-  const dispatch = useDispatch();
-
-  // Delete and Edit network request
-  const deleteData = () => {
-    dispatch(petsLoadingFun());
-    fetch(`${API_URL}/listing/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        dispatch(getPetsData());
-      })
-      .catch((error) => dispatch(petsErrorFun()));
-  };
+  const { token, roles } = useSelector((state) => state.login);
 
   return (
     <Div>
@@ -82,18 +51,22 @@ export const TableRow = ({
         <div className="td">{verified}</div>
         <div className="td">{rating}</div>
       </div>
-      {token != "" && roles[0] === "admin" ? (
+      {token != "" && roles === "admin" ? (
         <div className="icons">
           <i
             className="bx bxs-trash-alt delete"
-            onClick={() => setIsOpen(true)}
+            onClick={() => {
+              getId(id);
+              setIsOpen(true);
+            }}
           ></i>
           <i
             className="bx bxs-edit-alt edit"
-            onClick={() => setIsOpen2(true)}
+            onClick={() => {
+              getId(id);
+              setIsOpen2(true);
+            }}
           ></i>
-          {isOpen && <Modal deleteData={deleteData} setIsOpen={setIsOpen} />}
-          {isOpen2 && <Modal2 id={id} setIsOpen2={setIsOpen2} />}
         </div>
       ) : (
         <div className="visit">
