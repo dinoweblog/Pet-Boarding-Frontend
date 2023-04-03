@@ -54,7 +54,7 @@ export const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const Navigate = useNavigate();
 
   const userDetails = {
@@ -64,6 +64,7 @@ export const Register = () => {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
     fetch(`${API_URL}/register`, {
       method: "POST",
       body: JSON.stringify(userDetails),
@@ -73,6 +74,7 @@ export const Register = () => {
     })
       .then((res) => res.json())
       .then((res) => {
+        setLoading(false);
         if (res.message) {
           showErrorNotification(`${res.message}`);
         } else {
@@ -82,6 +84,7 @@ export const Register = () => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
         showErrorNotification(err.message);
       });
   };
@@ -115,7 +118,9 @@ export const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>Register</button>
+        <button onClick={handleSubmit}>
+          {loading ? `Register...` : "Register"}
+        </button>
         <Link to="/signup/admin">Create Admin Account</Link>
       </Div>
     </>
