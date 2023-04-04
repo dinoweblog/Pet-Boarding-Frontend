@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+---
+# Pet Boarding Website Frontend and Backend Project
+---
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Welcome 👋
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## About this project: 🙌
+> This is a solo project. It is a react and redux pet boarding booking website. A full-stack website developed by 2 days. I added features like login and signup for both users [`admin`, `costumer`], filter & sort according to price, & End to End Flow, etc.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Pages & Features 👇
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- `Home Page`: Nav Bar with menu, and shows all features and details.
+- `Sign-Up`: Users [admin & customer] details stored to server.
+- `Sign-In`: Users authentication to check whether user phone number and password match with details existing in the database.
+- `Additional Features`: All the functionalities like sorting, filtering, searching, and pagination have been added to the frontend via the backend.
 
-### `npm test`
+----
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Tech Stack Used 🔧
+#### Frontend
+- `Reactjs`
+- `Redux`
+- `Redux-Thunk`
+- `CSS`
+#### Backend
+- `Mongodb`
+- `Express`
+- `Mongoose`
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Screenshots :camera:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Home Page For Admin User**
+---
+![admin](https://user-images.githubusercontent.com/93374756/167250618-a58b248b-0fdf-4b6b-aa23-8197845e2798.png)
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
+- **Home Page For Customer User**
+---
+ ![user](https://user-images.githubusercontent.com/93374756/167250624-5095f8ed-c339-4f0f-a4a8-764317f092ad.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
+- **Sign-Up Sign-In Page**
+---
+![register](https://user-images.githubusercontent.com/93374756/165639435-6b19d3a2-8be7-4d2c-9568-f19b4032c13e.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+![login](https://user-images.githubusercontent.com/93374756/165639479-e9b59a74-bee8-4701-86dd-d66270cc97fb.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+- **Admin Dashboard**
+---
+![approval](https://user-images.githubusercontent.com/93374756/165639746-44406ccd-4215-4758-a40a-08a6bcb68334.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+---
+![booking](https://user-images.githubusercontent.com/93374756/165639888-89a76bb4-fec9-4c55-8c25-6bc65ee30976.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+![listing](https://user-images.githubusercontent.com/93374756/165639951-8c190b38-7b35-46f3-acbb-46da87ab73eb.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **Details Page**
+---
 
-### Deployment
+![single](https://user-images.githubusercontent.com/93374756/165642646-899fe43c-3ba8-47d7-b7e6-f226ecf98213.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+- **Thank You Page**
+---
+
+![thank you](https://user-images.githubusercontent.com/93374756/165640317-5b3e8818-b0f6-403e-9eaa-860f09c784ca.png)
+
+
